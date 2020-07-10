@@ -8,7 +8,7 @@ class Commands
 {
 public:
     Commands();
-protected:
+public:
     // 即std::shared_ptr
     QSharedPointer<Parameters> params;
     void set_parameters(QSharedPointer<Parameters> parameters)

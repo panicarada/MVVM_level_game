@@ -3,8 +3,9 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
-#include "person.h"
-#include <command/commands.h>
+#include <QSet>
+#include "person_ui.h"
+#include "command/commands.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class View; }
@@ -16,20 +17,23 @@ class View : public QMainWindow
 public:
     View(QWidget *parent = nullptr);
     ~View() override;
-    void set_move_command(QSharedPointer<Commands>);
-    void set_reset_command(QSharedPointer<Commands>);
+    void set_ice_move_command(QSharedPointer<Commands>);
+    void set_fire_move_command(QSharedPointer<Commands>);
+    void set_game_status_command(QSharedPointer<Commands>);
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override; // 键盘敲击时间
-
+    void keyPressEvent(QKeyEvent *event) override; // 键盘按下事件
+    void keyReleaseEvent(QKeyEvent *event) override; // 键盘松开事件
+    void paintEvent(QPaintEvent *) override; // 绘制事件，通过update()函数激活
 private slots:
 
 private:
     Ui::View *ui;
-    Person ice_person; // 冰人
-    Person fire_person; // 火人
-
-    QSharedPointer<Commands> move_command;
-    QSharedPointer<Commands> reset_command;
+    QSharedPointer<Person> ice_person; // 冰人
+    QSharedPointer<Person> fire_person; // 火人
+    QSet<Qt::Key> keys_pressed; // 被按下的所有按键
+    QSharedPointer<Commands> ice_move_command; // 冰人移动指令
+    QSharedPointer<Commands> fire_move_command; // 火人移动指令
+    QSharedPointer<Commands> game_status_command; // 游戏状态指令
 };
 #endif // VIEW_H

@@ -2,12 +2,17 @@
 #define PERSON_H
 
 #include <QWidget>
+#include <QPainter>
+#include <QPaintEvent>
 
-enum GameStatus
+
+
+// 人物形态
+enum PersonStatus
 {
-    playing = 0,
-    dead,
-    pause,
+    turningLeft, // 朝向左
+    turningRight,
+    Facing, // 面对玩家
 };
 
 // 人物
@@ -16,14 +21,11 @@ class Person : public QWidget
     Q_OBJECT
 public:
     explicit Person(QWidget *parent = nullptr);
+    void paint(QPainter &);
 
 private:
     QPoint pos; // 位置
-
-signals:
-    void game_status_changed(GameStatus gameStatus);
-
-
+    PersonStatus person_status; // 人物形态
 };
 
 #endif // PERSON_H

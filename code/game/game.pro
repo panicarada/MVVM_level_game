@@ -17,15 +17,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     command/commands.cpp \
+    command/game_status_command.cpp \
+    command/move_command.cpp \
     main.cpp \
     parameter/parameters.cpp \
-    view/person.cpp \
+    view/person_ui.cpp \
     view/view.cpp
 
 HEADERS += \
     command/commands.h \
+    command/game_status_command.h \
+    command/move_command.h \
+    common/Common.h \
     parameter/parameters.h \
-    view/person.h \
+    view/person_ui.h \
     view/view.h
 
 FORMS += \
