@@ -1,4 +1,4 @@
-
+#pragma once
 //person.h
 
 
@@ -12,7 +12,7 @@
 #define PERSONSIZE_X 5
 #define PERSONSIZE_Y 10
 
-class Map;
+extern class Map;
 
 class Person
 {

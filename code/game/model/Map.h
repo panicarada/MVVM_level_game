@@ -1,7 +1,7 @@
+#pragma once
 //Map.h
 
 
-#pragma once
 #ifndef _MAP_H
 #define _MAP_H
 

@@ -1,9 +1,9 @@
+#pragma once
 //Geometry.h
 
 
-#pragma once
 #ifndef _GEOMETRY_H
-#define _GEEMETRY_H
+#define _GEOMETRY_H
 
 #include<cmath>
 #include <iostream>

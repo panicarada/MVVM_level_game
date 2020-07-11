@@ -1,7 +1,6 @@
 //Map.cpp
 
 
-#include"Person.h"
 #include"Map.h"
 
 Map::Map()
