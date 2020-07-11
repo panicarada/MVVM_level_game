@@ -10,6 +10,8 @@
 #include"../command/FIRE_right_move_command.h"
 #include"../command/FIRE_jump_move_command.h"
 
+#include"../command/Move_command.h"
+
 ViewModel::ViewModel() throw()
 {
 	m_model = std::make_shared<Model>();
@@ -21,6 +23,8 @@ ViewModel::ViewModel() throw()
 	Fire_left_command = std::static_pointer_cast<Commands, Fire_left_move_command>(std::make_shared<Fire_left_move_command>(this));
 	Fire_right_command = std::static_pointer_cast<Commands, Fire_right_move_command>(std::make_shared<Fire_right_move_command>(this));
 	Fire_jump_command = std::static_pointer_cast<Commands, Fire_jump_move_command>(std::make_shared<Fire_jump_move_command>(this));
+
+	move_command = std::static_pointer_cast<Commands, Move_command>(std::make_shared<Move_command>(this));
 }
 
 std::shared_ptr<Commands> ViewModel::get_Ice_left_command()
@@ -53,6 +57,11 @@ std::shared_ptr<Commands> ViewModel::get_Fire_jump_command()
 	return Fire_jump_command;
 }
 
+std::shared_ptr<Commands> ViewModel::get_move_command()
+{
+	return move_command;
+}
+
 void ViewModel::Exec_Ice_left_command()
 {
 	m_model->set_speed_x(-V_MOVE, 0);
@@ -79,4 +88,19 @@ void ViewModel::Exec_Fire_jump_command()
 {
 	if (!m_model->isAerial(1))
 		m_model->set_speed_y(V_JUMP, 1);
+}
+
+void ViewModel::Exec_move_command()
+{
+	m_model->Move();
+}
+
+const Pos& ViewModel::get_ice_pos()
+{
+	return m_model->get_ice_pos();
+}
+
+const Pos& ViewModel::get_fire_pos()
+{
+	return m_model->get_fire_pos();
 }
