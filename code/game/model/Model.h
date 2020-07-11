@@ -28,6 +28,11 @@ public:
 		return false;
 	}
 
+	const Pos& get_ice_pos() throw();
+	const Pos& get_fire_pos() throw();
+
+	void Move() throw();
+
 private:
 	std::shared_ptr<Map> m_map;
 	std::shared_ptr<Person> ice_person;

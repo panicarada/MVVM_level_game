@@ -53,3 +53,19 @@ void Model::set_speed_y(double v_y, int person) throw()//person: 0-ice; 1-fire
 		fire_person->set_speed_y(v_y);
 	}
 }
+
+const Pos& Model::get_ice_pos() throw()
+{
+	return ice_person->get_pos();
+}
+
+const Pos& Model::get_fire_pos() throw()
+{
+	return fire_person->get_pos();
+}
+
+void Model::Move() throw()
+{
+	ice_person->move();
+	fire_person->move();
+}
