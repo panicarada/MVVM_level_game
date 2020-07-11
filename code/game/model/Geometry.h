@@ -96,12 +96,18 @@ int Line::location(Pos p) throw()
 class Floor :public Line
 {
 public:
+	Floor() throw() :Line() {}
+	Floor(double x1, double y1, double x2, double y2) throw() :Line(x1, y1, x2, y2) {}
+	Floor(Pos p1, Pos p2) throw() :Line(p1, p2) {}
 	virtual bool isRoof() { return false; }
 };
 
 class Roof :public Line
 {
 public:
+	Roof() throw() :Line() {}
+	Roof(double x1, double y1, double x2, double y2) throw() :Line(x1, y1, x2, y2) {}
+	Roof(Pos p1, Pos p2) throw() :Line(p1, p2) {}
 	virtual bool isRoof() { return true; }
 };
 

@@ -15,10 +15,10 @@ class Map
 public:
 	Map();
 
-	void set_ice_person(std::shared_ptr<Person> ice) throw();
-	void set_fire_person(std::shared_ptr<Person> fire) throw();
+	void set_ice_person(const std::shared_ptr<Person>& ice) throw();
+	void set_fire_person(const std::shared_ptr<Person>& fire) throw();
 
-	bool splitVelocity(Person& p);
+	void splitVelocity(const std::shared_ptr<Person>& p);
 private:
 	std::vector<std::shared_ptr<Line>> Walls;
 	std::shared_ptr<Person> ice_person;

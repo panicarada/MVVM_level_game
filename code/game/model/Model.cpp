@@ -66,6 +66,7 @@ const Pos& Model::get_fire_pos() throw()
 
 void Model::Move() throw()
 {
+	m_map->splitVelocity(ice_person);
 	ice_person->move();
 	fire_person->move();
 }

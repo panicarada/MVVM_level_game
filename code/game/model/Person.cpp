@@ -39,7 +39,7 @@ void Person::set_pos(double x, double y) throw()
 	m_pos.y = y;
 }
 
-const Pos& Person::get_pos()
+const Pos& Person::get_pos() throw()
 {
 	return m_pos;
 }
@@ -50,7 +50,7 @@ void Person::get_pos(double& x, double& y) throw()
 	y = m_pos.y;
 }
 
-const Pos& Person::get_pos_right()
+const Pos Person::get_pos_right() throw()
 {
 	return Pos(m_pos.x + PERSONSIZE_X, m_pos.y);
 }
@@ -92,7 +92,6 @@ void Person::set_aerial(bool isAerial) throw()
 
 void Person::move()
 {
-	m_map->splitVelocity(*this);
 
 	m_pos.x += m_speed.x;
 	m_pos.y += m_speed.y;

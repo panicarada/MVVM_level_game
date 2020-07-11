@@ -6,10 +6,12 @@
 
 #include<memory>
 #include<string>
-#include"Map.h"
+#include"Geometry.h"
 
 #define PERSONSIZE_X 5
 #define PERSONSIZE_Y 10
+
+class Map;
 
 class Person
 {
@@ -28,7 +30,7 @@ public:
 	void set_pos(double x, double y) throw();
 	const Pos& get_pos() throw();
 	void get_pos(double& x, double& y) throw();
-	const Pos& get_pos_right() throw();
+	const Pos get_pos_right() throw();
 
 	const std::string& get_name() const throw();
 

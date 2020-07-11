@@ -14,35 +14,35 @@ Map::Map()
 	Walls.push_back(rWall);
 }
 
-void Map::set_ice_person(std::shared_ptr<Person> ice) throw()
+void Map::set_ice_person(const std::shared_ptr<Person>& ice) throw()
 {
 	ice_person = ice;
 }
 
-void Map::set_fire_person(std::shared_ptr<Person> fire) throw()
+void Map::set_fire_person(const std::shared_ptr<Person>& fire) throw()
 {
 	fire_person = fire;
 }
 
-bool Map::splitVelocity(Person& p)
+void Map::splitVelocity(const std::shared_ptr<Person>& p)
 {
 	bool aerial = true;
 	auto iter(Walls.begin());
 	for (; iter != Walls.end(); ++iter)
 	{
-		if (((*iter)->location(p.get_pos()) == 0 && p.get_speed_x() <= 0) || ((*iter)->location(p.get_pos_right()) == 0 && p.get_speed_y() >= 0))
+		if (((*iter)->location(p->get_pos()) == 0 && p->get_speed_x() <= 0) || ((*iter)->location(p->get_pos_right()) == 0 && p->get_speed_y() >= 0))
 		{
 			aerial = false;
-			if ((!(*iter)->isRoof() && p.get_speed_y > 0) || (*iter)->isRoof())//起跳或撞到天花板
+			if ((!(*iter)->isRoof() && p->get_speed_y() > 0) || (*iter)->isRoof())//起跳或撞到天花板
 			{
-				p.set_aerial(true);
+				p->set_aerial(true);
 			}
-			else p.set_aerial(false);//落地或沿地面移动
-			p.get_speed().split(*iter);
+			else p->set_aerial(false);//落地或沿地面移动
+			p->get_speed().split(*iter);
 		}
 	}
 	if (aerial)
 	{
-		p.set_aerial(true);
+		p->set_aerial(true);
 	}
 }
