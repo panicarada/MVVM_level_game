@@ -1,7 +1,7 @@
+#pragma once
 //ICE_jump_move_command
 
 
-#pragma once
 #ifndef _ICEJUMP_H
 #define _ICEJUMP_H
 

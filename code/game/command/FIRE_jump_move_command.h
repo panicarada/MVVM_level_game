@@ -1,7 +1,7 @@
+#pragma once
 //Fire_jump_move_command
 
 
-#pragma once
 #ifndef _FIREJUMP_H
 #define _FIREJUMP_H
 

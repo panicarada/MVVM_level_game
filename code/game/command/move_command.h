@@ -1,7 +1,7 @@
+#pragma once
 //Move_command
 
 
-#pragma once
 #ifndef _MOVECOMMAND_H
 #define _MOVECOMMAND_H
 

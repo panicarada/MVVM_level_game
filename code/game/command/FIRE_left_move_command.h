@@ -1,7 +1,7 @@
+#pragma once
 //Fire_left_move_command
 
 
-#pragma once
 #ifndef _FIRELEFT_H
 #define _FIRELEFT_H
 
