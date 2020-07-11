@@ -5,7 +5,7 @@
 
 ViewModel::ViewModel() throw()
 {
-
+	
 }
 
 std::shared_ptr<Commands> ViewModel::get_Ice_left_command()
