@@ -1,15 +1,19 @@
 #include "view.h"
 #include "ui_view.h"
 #include <QDebug>
-#include <command/move_command.h>
+#include "command/move_command.h"
 
 View::View(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)
+    , timer(new QTimer) // 定时器
 {
     ui->setupUi(this);
-    fire_person = QSharedPointer<Person>::create(this);
-    ice_person = QSharedPointer<Person>::create(this);
+    fire_person = QSharedPointer<Person_UI>::create(this);
+    ice_person = QSharedPointer<Person_UI>::create(this);
+    const int GAP = 100; // 每隔0.1秒触发一次槽函数move
+    timer->start(GAP);
+    connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 }
 
 View::~View()
@@ -20,6 +24,47 @@ View::~View()
 void View::set_game_status_command(QSharedPointer<Commands> command)
 {
     game_status_command = command;
+}
+
+void View::set_ice_jump_command(QSharedPointer<Commands> command)
+{
+    ice_jump_command = command;
+}
+
+void View::set_ice_left_command(QSharedPointer<Commands> command)
+{
+    ice_left_command = command;
+}
+
+void View::set_ice_right_command(QSharedPointer<Commands> command)
+{
+    ice_right_command = command;
+}
+
+void View::set_fire_jump_command(QSharedPointer<Commands> command)
+{
+    fire_jump_command = command;
+}
+
+void View::set_fire_left_command(QSharedPointer<Commands> command)
+{
+    fire_left_command = command;
+}
+
+void View::set_fire_right_command(QSharedPointer<Commands> command)
+{
+    fire_right_command = command;
+}
+
+
+void View::set_get_ice_pos(std::function<QPoint (void)> func)
+{
+    this->get_ice_pos = func;
+}
+
+void View::set_get_fire_pos(std::function<QPoint (void)> func)
+{
+    get_fire_pos = func;
 }
 
 void View::set_ice_move_command(QSharedPointer<Commands> command)
@@ -44,73 +89,7 @@ void View::keyPressEvent(QKeyEvent *event)
 //                    QSharedPointer<gameParameters>::create(GameStatus::pause));
 //        game_status_command->exec();
     }
-    /* 游戏暂停 */
 
-    /* 2.冰人运动 */
-    bool Jump = false;
-    bool Down = false;
-    bool Left = false;
-    bool Right = false;
-    // 上与下动作冲突
-    if (keys_pressed.contains(Qt::Key_W))
-    {
-        qDebug() << "ice Jump";
-        Jump = true;
-    }
-    else if (keys_pressed.contains(Qt::Key_S))
-    {
-        qDebug() << "ice Down";
-        Down = true;
-    }
-    // 左移与右移冲突
-    if (keys_pressed.contains(Qt::Key_A))
-    {
-        qDebug() << "ice Left";
-        Left = true;
-    }
-    else if (keys_pressed.contains(Qt::Key_D))
-    {
-        qDebug() << "ice Right";
-        Right = true;
-    }
-    // QSharedPointer<T>::create(...)相当于std::make_shared
-//    ice_move_command->set_parameters(
-//                QSharedPointer<moveParameters>::create(Left, Right, Jump, Down));
-    /* 冰人运动 */
-
-
-    /* 3.火人运动 */
-    // 上与下动作冲突
-    if (keys_pressed.contains(Qt::Key_Up))
-    {
-        qDebug() << "fire Jump";
-        Jump = true;
-    }
-    else if (keys_pressed.contains(Qt::Key_Down))
-    {
-        qDebug() << "fire Down";
-        Down = true;
-    }
-    // 左移与右移冲突
-    if (keys_pressed.contains(Qt::Key_Left))
-    {
-        qDebug() << "fire Left";
-        Left = true;
-    }
-    else if (keys_pressed.contains(Qt::Key_Right))
-    {
-        qDebug() << "fire Right";
-        Right = true;
-    }
-    // QSharedPointer<T>::create(...)相当于std::make_shared
-//    fire_move_command->set_parameters(
-//                QSharedPointer<moveParameters>::create(Left, Right, Jump, Down));
-    /* 火人运动 */
-
-
-
-//    ice_move_command->exec();
-//    fire_move_command->exec();
 }
 
 
@@ -127,4 +106,46 @@ void View::paintEvent(QPaintEvent *)
     QPainter painter(this);
     ice_person->paint(painter);
     fire_person->paint(painter);
+}
+
+void View::move()
+{
+    qDebug() << "Hello World!";
+    if (keys_pressed.contains(Qt::Key_A))
+    {
+        qDebug() << "ice left";
+        ice_person->set_status(PersonStatus::turningLeft);
+//        ice_left_command->exec();
+    }
+    if (keys_pressed.contains(Qt::Key_D))
+    {
+        qDebug() << "ice right";
+        ice_person->set_status(PersonStatus::turningRight);
+//        ice_right_command->exec();
+    }
+    if (keys_pressed.contains(Qt::Key_W))
+    {
+        qDebug() << "ice jump";
+//        ice_jump_command->exec();
+    }
+    if (keys_pressed.contains(Qt::Key_Left))
+    {
+        qDebug() << "fire left";
+        fire_person->set_status(PersonStatus::turningLeft);
+//        ice_left_command->exec();
+    }
+    if (keys_pressed.contains(Qt::Key_Right))
+    {
+        qDebug() << "fire right";
+        fire_person->set_status(PersonStatus::turningRight);
+//        ice_right_command->exec();
+    }
+    if (keys_pressed.contains(Qt::Key_Up))
+    {
+        qDebug() << "fire jump";
+//        ice_jump_command->exec();
+    }
+
+//    ice_move_command->exec();
+//    fire_move_command->exec();
 }

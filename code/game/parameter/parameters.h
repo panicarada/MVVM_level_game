@@ -2,7 +2,7 @@
 #define PARAMETERS_H
 
 #include <string>
-#include "common/Common.h"
+#include "./common/Common.h"
 
 
 class Parameters
@@ -25,24 +25,6 @@ public:
     }
 private:
     std::string path;
-};
-
-
-
-// 人物移动参数
-class moveParameters : public Parameters
-{
-public:
-    moveParameters(bool Left, bool Right, bool Jump, bool Down)
-        : Left(Left), Right(Right), Jump(Jump), Down(Down)
-    {
-
-    }
-private:
-    bool Left; // 是否向左
-    bool Right; // 是否向右
-    bool Jump; // 是否跳跃
-    bool Down; // 是否向下
 };
 
 

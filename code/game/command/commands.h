@@ -1,7 +1,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include "parameter/parameters.h"
+#include "./parameter/parameters.h"
 #include <QSharedPointer>
 
 class Commands

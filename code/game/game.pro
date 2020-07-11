@@ -20,18 +20,33 @@ SOURCES += \
     command/game_status_command.cpp \
     command/move_command.cpp \
     main.cpp \
+    model/Map.cpp \
+    model/Model.cpp \
+    model/Person.cpp \
     parameter/parameters.cpp \
     view/person_ui.cpp \
-    view/view.cpp
+    view/view.cpp \
+    view_model/ViewModel.cpp
 
 HEADERS += \
+    command/FIRE_jump_move_command.h \
+    command/FIRE_left_move_command.h \
+    command/FIRE_right_move_command.h \
+    command/ICE_jump_move_command.h \
+    command/ICE_left_move_command.h \
+    command/ICE_right_move_command.h \
     command/commands.h \
     command/game_status_command.h \
     command/move_command.h \
     common/Common.h \
+    model/Geometry.h \
+    model/Map.h \
+    model/Model.h \
+    model/Person.h \
     parameter/parameters.h \
     view/person_ui.h \
-    view/view.h
+    view/view.h \
+    view_model/ViewModel.h
 
 FORMS += \
     view/view.ui

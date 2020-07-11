@@ -1,12 +1,23 @@
 #include "person_ui.h"
 
-Person::Person(QWidget *parent) : QWidget(parent)
+Person_UI::Person_UI(QWidget *parent) : QWidget(parent)
 {
 
 }
 
-void Person::paint(QPainter &painter)
+void Person_UI::paint(QPainter &painter)
 {
-    painter.setBrush(Qt::white);
-    painter.drawEllipse(20, 17, 8, 8);
+
+    painter.setBrush(Qt::blue);
+    painter.drawEllipse(pos, 100, 100);
+}
+
+void Person_UI::set_pos(const QPoint &pos)
+{
+    this->pos = pos;
+}
+
+void Person_UI::set_status(const PersonStatus &&status)
+{
+    this->person_status = status;
 }

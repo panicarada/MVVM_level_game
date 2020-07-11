@@ -4,3 +4,8 @@ game_status_command::game_status_command()
 {
 
 }
+
+void game_status_command::exec()
+{
+
+}

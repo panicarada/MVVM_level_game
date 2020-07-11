@@ -21,25 +21,25 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_Person_t {
+struct qt_meta_stringdata_Person_UI_t {
     QByteArrayData data[1];
-    char stringdata0[7];
+    char stringdata0[10];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Person_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_Person_UI_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_Person_t qt_meta_stringdata_Person = {
+static const qt_meta_stringdata_Person_UI_t qt_meta_stringdata_Person_UI = {
     {
-QT_MOC_LITERAL(0, 0, 6) // "Person"
+QT_MOC_LITERAL(0, 0, 9) // "Person_UI"
 
     },
-    "Person"
+    "Person_UI"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_Person[] = {
+static const uint qt_meta_data_Person_UI[] = {
 
  // content:
        8,       // revision
@@ -55,7 +55,7 @@ static const uint qt_meta_data_Person[] = {
        0        // eod
 };
 
-void Person::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Person_UI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -63,30 +63,30 @@ void Person::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject Person::staticMetaObject = { {
+QT_INIT_METAOBJECT const QMetaObject Person_UI::staticMetaObject = { {
     QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_Person.data,
-    qt_meta_data_Person,
+    qt_meta_stringdata_Person_UI.data,
+    qt_meta_data_Person_UI,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *Person::metaObject() const
+const QMetaObject *Person_UI::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Person::qt_metacast(const char *_clname)
+void *Person_UI::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_Person.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_Person_UI.stringdata0))
         return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
-int Person::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Person_UI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     return _id;
