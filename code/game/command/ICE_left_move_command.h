@@ -1,7 +1,7 @@
+#pragma once
 //ICE_left_move_command
 
 
-#pragma once
 #ifndef _ICELEFT_H
 #define _ICELEFT_H
 

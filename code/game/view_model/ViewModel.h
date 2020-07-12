@@ -1,7 +1,7 @@
+#pragma once
 //ViewModel.h
 
 
-#pragma once
 #ifndef _VIEWMODEL_H
 #define _VIEWMODEL_H
 
@@ -22,6 +22,14 @@ public:
     std::shared_ptr<Commands> get_Fire_jump_command();
 
     std::shared_ptr<Commands> get_move_command();
+    
+    void set_Ice_left_command(std::shared_ptr<Commands> ptr) { Ice_left_command=ptr; }
+    void set_Ice_right_command(std::shared_ptr<Commands> ptr) { Ice_right_command = ptr; }
+    void set_Ice_jump_command(std::shared_ptr<Commands> ptr) { Ice_jump_command = ptr; }
+    void set_Fire_left_command(std::shared_ptr<Commands> ptr) { Fire_left_command = ptr; }
+    void set_Fire_right_command(std::shared_ptr<Commands> ptr) { Fire_right_command = ptr; }
+    void set_Fire_jump_vommand(std::shared_ptr<Commands> ptr) { Fire_jump_command = ptr; }
+    void set_move_command(std::shared_ptr<Commands> ptr) { move_command = ptr; }
 
     const Pos& get_ice_pos();
     const Pos& get_fire_pos();
