@@ -10,21 +10,23 @@
 #include"Geometry.h"
 #include "./common/Common.h"
 
-extern class Map;
+class Map;
 
 class Person
 {
 public:
-    Person() noexcept :m_pos(0, 0), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(0, -10) {}
-    Person(std::string name) noexcept :m_pos(0, 0), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(0, -10)
+    Person() noexcept :m_pos(0, 0), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(V_MOTIONLESS, V_MOTIONLESS), aerial(false) {}
+    Person(std::string name) noexcept :m_pos(0, 0), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(V_MOTIONLESS, V_MOTIONLESS), aerial(false)
+
     {
         m_name = std::make_shared<std::string>(name);
     }
 
     Person(const Person& p) noexcept :
-        m_name(p.m_name), m_map(p.m_map), m_pos(p.m_pos), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(p.m_speed) {}
+        m_name(p.m_name), m_map(p.m_map), m_pos(p.m_pos), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(p.m_speed), aerial(p.aerial) {}
     Person(Person&& p) noexcept:
-        m_name(p.m_name), m_map(p.m_map), m_pos(p.m_pos), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(p.m_speed) {}
+        m_name(p.m_name), m_map(p.m_map), m_pos(p.m_pos), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(p.m_speed), aerial(p.aerial) {}
+
 
     void set_map(const std::shared_ptr<Map>& m);
 

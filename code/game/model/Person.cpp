@@ -89,7 +89,6 @@ void Person::set_aerial(bool isAerial) noexcept
 
 void Person::move()
 {
-
     m_pos.x += m_speed.x;
     m_pos.y += m_speed.y;
 
@@ -100,7 +99,7 @@ void Person::move()
         else m_speed.y = V_GRAVITY;
     else
     {
-        m_speed.x = V_MOTIONLESS;
         m_speed.y = V_MOTIONLESS;
     }
+    m_speed.x = V_MOTIONLESS;
 }

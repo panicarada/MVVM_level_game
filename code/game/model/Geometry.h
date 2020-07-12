@@ -40,6 +40,8 @@ public:
     const double& get_sin() const noexcept { return sin; }
     const double& get_cos() const noexcept { return cos; }
     virtual bool isRoof() = 0;
+    virtual bool isWall() = 0;
+    virtual bool isFloor() = 0;
 
     int location(Pos p) noexcept;
 protected:
@@ -56,6 +58,8 @@ public:
     Floor(double x1, double y1, double x2, double y2) noexcept :Line(x1, y1, x2, y2) {}
     Floor(Pos p1, Pos p2) noexcept :Line(p1, p2) {}
     virtual bool isRoof() { return false; }
+    virtual bool isWall() { return false; }
+    virtual bool isFloor() { return true; }
 };
 
 class Roof :public Line
@@ -65,6 +69,19 @@ public:
     Roof(double x1, double y1, double x2, double y2) noexcept :Line(x1, y1, x2, y2) {}
     Roof(Pos p1, Pos p2) noexcept :Line(p1, p2) {}
     virtual bool isRoof() { return true; }
+    virtual bool isWall() { return false; }
+    virtual bool isFloor() { return false; }
+};
+
+class Wall :public Line
+{
+public:
+    Wall() noexcept :Line() {}
+    Wall(double x1, double y1, double x2, double y2) noexcept :Line(x1, y1, x2, y2) {}
+    Wall(Pos p1, Pos p2) noexcept :Line(p1, p2) {}
+    virtual bool isRoof() { return false; }
+    virtual bool isWall() { return true; }
+    virtual bool isFloor() { return false; }
 };
 
 class Velocity

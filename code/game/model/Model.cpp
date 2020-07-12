@@ -9,9 +9,9 @@ Model::Model() noexcept
 {
     m_map = std::make_shared<Map>();
     ice_person = std::make_shared<Person>("ice_person");
-    ice_person->set_pos(50, 150);
+    ice_person->set_pos(150, 10);
     fire_person = std::make_shared<Person>("fire_person");
-    fire_person->set_pos(5, 200);
+    fire_person->set_pos(6, 10);
     m_map->set_ice_person(ice_person);
     m_map->set_fire_person(fire_person);
     ice_person->set_map(m_map);

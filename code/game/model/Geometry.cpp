@@ -38,6 +38,19 @@ int Line::location(Pos p) noexcept
     if ((p.x < dot1.x&&p.x < dot2.x) || (p.x > dot1.x&&p.x > dot2.x))
                         return  2;
 
+    if(dot1.x==dot2.x)
+    {
+        if(p.x==dot1.x) return 0;
+        else if(p.x<dot1.x) return 1;
+        else return -1;
+    }
+    if(dot1.y==dot2.y)
+    {
+        if(p.y==dot1.y) return 0;
+        else if(p.y<dot1.y) return -1;
+        else return 1;
+    }
+
     double temp = (p.x - dot1.x) / (dot2.x - dot1.x) - (p.y - dot1.y) / (dot2.y - dot1.y);
     if (temp < 0)		return  1;
     else if (temp == 0) return  0;
@@ -70,7 +83,7 @@ void Velocity::split(std::shared_ptr<Line> l) noexcept
     {
         y = -D_SPEED;
     }
-    else if (y > 0);//??
+    else if (y > 0 && l->isFloor());//??
     else//?????
     {
         double tempx, tempy;
