@@ -11,5 +11,14 @@ enum GameStatus
 };
 
 
+#define PERSONSIZE_X 50
+#define PERSONSIZE_Y 100
+
+#define V_MOTIONLESS 0		//?????0
+#define V_JUMP 4			//?????10
+#define V_MOVE 2
+#define D_SPEED 0.5			//?????
+#define V_GRAVITY -4		//???????????
+
 
 #endif // COMMON_H

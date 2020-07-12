@@ -1,15 +1,24 @@
 #include "person_ui.h"
+#include "./common/Common.h"
+#include <QDebug>
 
-Person_UI::Person_UI(QWidget *parent) : QWidget(parent)
+Person_UI::Person_UI(const bool &isIce, QWidget *parent) : QWidget(parent), isIce(isIce)
 {
 
 }
 
 void Person_UI::paint(QPainter &painter)
 {
-
-    painter.setBrush(Qt::blue);
-    painter.drawEllipse(pos, 100, 100);
+    if (isIce)
+    {
+        painter.setBrush(Qt::blue);
+    }
+    else
+    {
+        painter.setBrush(Qt::red);
+    }
+//    qDebug() << pos;
+    painter.drawRect(pos.x(), pos.y()-PERSONSIZE_Y, PERSONSIZE_X, PERSONSIZE_Y);
 }
 
 void Person_UI::set_pos(const QPoint &pos)

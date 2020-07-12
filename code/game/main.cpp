@@ -1,12 +1,12 @@
-#include "view/view.h"
+#include "app/app.h"
 
 #include <QApplication>
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    View w;
-    w.show();
-
+    App app;
+    app.run();
     return a.exec();
 }

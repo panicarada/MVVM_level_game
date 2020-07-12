@@ -11,13 +11,13 @@
 class Ice_jump_move_command :public Commands
 {
 public:
-    Ice_jump_move_command(std::shared_ptr<ViewModel> vm) { m_VM = vm; }
+    Ice_jump_move_command(QSharedPointer<ViewModel> vm) { m_VM = vm; }
     void exec() override
     {
         m_VM->Exec_Ice_jump_command();
     }
 private:
-    std::shared_ptr<ViewModel> m_VM;
+    QSharedPointer<ViewModel> m_VM;
 };
 
 #endif // !_ICEJUMP_H

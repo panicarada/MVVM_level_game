@@ -16,10 +16,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    app/app.cpp \
     command/commands.cpp \
     command/game_status_command.cpp \
     command/move_command.cpp \
     main.cpp \
+    model/Geometry.cpp \
     model/Map.cpp \
     model/Model.cpp \
     model/Person.cpp \
@@ -29,6 +31,7 @@ SOURCES += \
     view_model/ViewModel.cpp
 
 HEADERS += \
+    app/app.h \
     command/FIRE_jump_move_command.h \
     command/FIRE_left_move_command.h \
     command/FIRE_right_move_command.h \

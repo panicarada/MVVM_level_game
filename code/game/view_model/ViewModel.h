@@ -5,13 +5,13 @@
 #ifndef _VIEWMODEL_H
 #define _VIEWMODEL_H
 
-#include"../model/Model.h"
-#include"../command/commands.h"
+#include"./model/Model.h"
+#include"./command/commands.h"
 
 class ViewModel
 {
 public:
-    ViewModel() throw();
+    ViewModel() noexcept;
 
     std::shared_ptr<Commands> get_Ice_left_command();
     std::shared_ptr<Commands> get_Ice_right_command();
