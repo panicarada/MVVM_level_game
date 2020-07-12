@@ -13,12 +13,12 @@ Map::Map()
         Walls.push_back(rWall);
 }
 
-void Map::set_ice_person(const std::shared_ptr<Person>& ice) throw()
+void Map::set_ice_person(const std::shared_ptr<Person>& ice) noexcept
 {
         ice_person = ice;
 }
 
-void Map::set_fire_person(const std::shared_ptr<Person>& fire) throw()
+void Map::set_fire_person(const std::shared_ptr<Person>& fire) noexcept
 {
         fire_person = fire;
 }

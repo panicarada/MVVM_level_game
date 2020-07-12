@@ -8,6 +8,7 @@
 #include "Person.h"
 #include "Geometry.h"
 #include <vector>
+#include "./common/Common.h"
 
 
 class Map
@@ -15,8 +16,8 @@ class Map
 public:
     Map();
 
-    void set_ice_person(const std::shared_ptr<Person>& ice) throw();
-    void set_fire_person(const std::shared_ptr<Person>& fire) throw();
+    void set_ice_person(const std::shared_ptr<Person>& ice) noexcept;
+    void set_fire_person(const std::shared_ptr<Person>& fire) noexcept;
 
     void splitVelocity(const std::shared_ptr<Person>& p);
 private:

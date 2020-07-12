@@ -3,9 +3,9 @@
 
 #include"ViewModel.h"
 
-ViewModel::ViewModel() throw()
+ViewModel::ViewModel() noexcept
 {
-	
+    m_model = std::make_shared<Model>();
 }
 
 std::shared_ptr<Commands> ViewModel::get_Ice_left_command()

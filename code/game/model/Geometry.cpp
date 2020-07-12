@@ -5,7 +5,7 @@
 
 
 
-Pos& Pos::operator=(const Pos& p) throw()
+Pos& Pos::operator=(const Pos& p) noexcept
 {
     if (this != &p)
     {
@@ -15,7 +15,7 @@ Pos& Pos::operator=(const Pos& p) throw()
     return *this;
 }
 
-Pos& Pos::operator=(Pos&& p) throw()
+Pos& Pos::operator=(Pos&& p) noexcept
 {
     if (this != &p)
     {
@@ -25,7 +25,7 @@ Pos& Pos::operator=(Pos&& p) throw()
     return *this;
 }
 
-bool Pos::operator==(const Pos& p) throw()
+bool Pos::operator==(const Pos& p) noexcept
 {
     if (x == p.x && y == p.y)
         return true;
@@ -33,7 +33,7 @@ bool Pos::operator==(const Pos& p) throw()
 }
 
 //-1 - ???????; 0 - ????; 1 - ???????; 2 - ????
-int Line::location(Pos p) throw()
+int Line::location(Pos p) noexcept
 {
     if ((p.x < dot1.x&&p.x < dot2.x) || (p.x > dot1.x&&p.x > dot2.x))
                         return  2;
@@ -44,7 +44,7 @@ int Line::location(Pos p) throw()
     else				return -1;
 }
 
-Velocity& Velocity::operator=(const Velocity& v) throw()
+Velocity& Velocity::operator=(const Velocity& v) noexcept
 {
     if (this != &v)
     {
@@ -54,7 +54,7 @@ Velocity& Velocity::operator=(const Velocity& v) throw()
     return *this;
 }
 
-Velocity& Velocity::operator=(Velocity&& v) throw()
+Velocity& Velocity::operator=(Velocity&& v) noexcept
 {
     if (this != &v)
     {
@@ -64,7 +64,7 @@ Velocity& Velocity::operator=(Velocity&& v) throw()
     return *this;
 }
 
-void Velocity::split(std::shared_ptr<Line> l) throw()
+void Velocity::split(std::shared_ptr<Line> l) noexcept
 {
     if (l->isRoof())//?????
     {

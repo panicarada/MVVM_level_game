@@ -9,8 +9,8 @@ View::View(QWidget *parent)
     , timer(new QTimer) // 定时器
 {
     ui->setupUi(this);
-    fire_person = QSharedPointer<Person_UI>::create(this);
-    ice_person = QSharedPointer<Person_UI>::create(this);
+    fire_person = QSharedPointer<Person_UI>::create(false, this);
+    ice_person = QSharedPointer<Person_UI>::create(true, this);
     const int GAP = 100; // 每隔0.1秒触发一次槽函数move
     timer->start(GAP);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
@@ -56,6 +56,11 @@ void View::set_fire_right_command(QSharedPointer<Commands> command)
     fire_right_command = command;
 }
 
+void View::set_move_command(QSharedPointer<Commands> command)
+{
+    move_command = command;
+}
+
 
 void View::set_get_ice_pos(std::function<QPoint (void)> func)
 {
@@ -65,16 +70,6 @@ void View::set_get_ice_pos(std::function<QPoint (void)> func)
 void View::set_get_fire_pos(std::function<QPoint (void)> func)
 {
     get_fire_pos = func;
-}
-
-void View::set_ice_move_command(QSharedPointer<Commands> command)
-{
-    ice_move_command = command;
-}
-
-void View::set_fire_move_command(QSharedPointer<Commands> command)
-{
-    fire_move_command = command;
 }
 
 void View::keyPressEvent(QKeyEvent *event)
@@ -104,48 +99,57 @@ void View::keyReleaseEvent(QKeyEvent *event)
 void View::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
+    // 变换y轴
+    QPoint ice_pos = get_ice_pos();
+    ice_pos.setY(this->height() - ice_pos.y());
+    ice_person->set_pos(ice_pos);
+    QPoint fire_pos = get_fire_pos();
+    fire_pos.setY(this->height() - fire_pos.y());
+    fire_person->set_pos(fire_pos);
+
     ice_person->paint(painter);
     fire_person->paint(painter);
 }
 
 void View::move()
 {
-    qDebug() << "Hello World!";
+//    qDebug() << "Hello World!";
     if (keys_pressed.contains(Qt::Key_A))
     {
-        qDebug() << "ice left";
+//        qDebug() << "ice left";
         ice_person->set_status(PersonStatus::turningLeft);
-//        ice_left_command->exec();
+        ice_left_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_D))
     {
-        qDebug() << "ice right";
+//        qDebug() << "ice right";
         ice_person->set_status(PersonStatus::turningRight);
-//        ice_right_command->exec();
+        ice_right_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_W))
     {
-        qDebug() << "ice jump";
-//        ice_jump_command->exec();
+//        qDebug() << "ice jump";
+        ice_jump_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_Left))
     {
-        qDebug() << "fire left";
+//        qDebug() << "fire left";
         fire_person->set_status(PersonStatus::turningLeft);
-//        ice_left_command->exec();
+        fire_left_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_Right))
     {
-        qDebug() << "fire right";
+//        qDebug() << "fire right";
         fire_person->set_status(PersonStatus::turningRight);
-//        ice_right_command->exec();
+        fire_right_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_Up))
     {
-        qDebug() << "fire jump";
-//        ice_jump_command->exec();
+//        qDebug() << "fire jump";
+        fire_jump_command->exec();
     }
 
-//    ice_move_command->exec();
-//    fire_move_command->exec();
+    move_command->exec();
+//    qDebug() << ice_person->pos;
+    update();
 }
