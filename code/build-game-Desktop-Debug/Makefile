@@ -63,7 +63,8 @@ SOURCES       = ../game/app/app.cpp \
 		../game/parameter/parameters.cpp \
 		../game/view/person_ui.cpp \
 		../game/view/view.cpp \
-		../game/view_model/ViewModel.cpp moc_person_ui.cpp \
+		../game/view_model/ViewModel.cpp qrc_imgs.cpp \
+		moc_person_ui.cpp \
 		moc_view.cpp
 OBJECTS       = app.o \
 		commands.o \
@@ -77,9 +78,32 @@ OBJECTS       = app.o \
 		person_ui.o \
 		view.o \
 		ViewModel.o \
+		qrc_imgs.o \
 		moc_person_ui.o \
 		moc_view.o
-DIST          = /usr/local/Cellar/qt/5.14.1/mkspecs/features/spec_pre.prf \
+DIST          = ../game/source/BGM/BackgroundMusic.mp3 \
+		../game/source/BGM/Death.mp3 \
+		../game/source/BGM/Diamond.mp3 \
+		../game/source/BGM/Door.mp3 \
+		../game/source/BGM/Freeze.mp3 \
+		../game/source/BGM/Jump_fb.mp3 \
+		../game/source/BGM/Jump_wg.mp3 \
+		../game/source/BGM/WaterSteps.mp3 \
+		../game/source/image/backwall.png \
+		../game/source/image/fire_left.png \
+		../game/source/image/fire_right.png \
+		../game/source/image/fire_stand.png \
+		../game/source/image/ice_left.png \
+		../game/source/image/ice_right.png \
+		../game/source/image/ice_stand.png \
+		../game/source/image/source/CharAssets.png \
+		../game/source/image/source/MenuAssets.png \
+		../game/source/image/source/PopupAssets.png \
+		../game/source/image/source/TempleAssets(1).png \
+		../game/source/image/source/TempleAssets(2).png \
+		../game/source/image/source/TempleAssets.png \
+		../game/source/image/source/back.png \
+		/usr/local/Cellar/qt/5.14.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Cellar/qt/5.14.1/mkspecs/qdevice.pri \
 		/usr/local/Cellar/qt/5.14.1/mkspecs/features/device_config.prf \
 		/usr/local/Cellar/qt/5.14.1/mkspecs/common/unix.conf \
@@ -549,6 +573,7 @@ Makefile: ../game/game.pro /usr/local/Cellar/qt/5.14.1/mkspecs/macx-clang/qmake.
 		/usr/local/Cellar/qt/5.14.1/mkspecs/features/yacc.prf \
 		/usr/local/Cellar/qt/5.14.1/mkspecs/features/lex.prf \
 		../game/game.pro \
+		../game/source/imgs.qrc \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Resources/QtWidgets.prl \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Resources/QtGui.prl \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Resources/QtCore.prl
@@ -763,6 +788,7 @@ Makefile: ../game/game.pro /usr/local/Cellar/qt/5.14.1/mkspecs/macx-clang/qmake.
 /usr/local/Cellar/qt/5.14.1/mkspecs/features/yacc.prf:
 /usr/local/Cellar/qt/5.14.1/mkspecs/features/lex.prf:
 ../game/game.pro:
+../game/source/imgs.qrc:
 /usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Resources/QtWidgets.prl:
 /usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Resources/QtGui.prl:
 /usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Resources/QtCore.prl:
@@ -795,6 +821,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../game/source/imgs.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Cellar/qt/5.14.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../game/app/app.h ../game/command/FIRE_jump_move_command.h ../game/command/FIRE_left_move_command.h ../game/command/FIRE_right_move_command.h ../game/command/ICE_jump_move_command.h ../game/command/ICE_left_move_command.h ../game/command/ICE_right_move_command.h ../game/command/commands.h ../game/command/game_status_command.h ../game/command/move_command.h ../game/common/Common.h ../game/model/Map.h ../game/model/Model.h ../game/model/Person.h ../game/parameter/parameters.h ../game/view/person_ui.h ../game/view/view.h ../game/view_model/ViewModel.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../game/app/app.cpp ../game/command/commands.cpp ../game/command/game_status_command.cpp ../game/command/move_command.cpp ../game/main.cpp ../game/model/Map.cpp ../game/model/Model.cpp ../game/model/Person.cpp ../game/parameter/parameters.cpp ../game/view/person_ui.cpp ../game/view/view.cpp ../game/view_model/ViewModel.cpp $(DISTDIR)/
@@ -825,8 +852,19 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_imgs.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_imgs.cpp
+qrc_imgs.cpp: ../game/source/imgs.qrc \
+		/usr/local/Cellar/qt/5.14.1/bin/rcc \
+		../game/source/image/fire_stand.png \
+		../game/source/image/fire_right.png \
+		../game/source/image/ice_stand.png \
+		../game/source/image/fire_left.png \
+		../game/source/image/ice_left.png \
+		../game/source/image/ice_right.png
+	/usr/local/Cellar/qt/5.14.1/bin/rcc -name imgs ../game/source/imgs.qrc -o qrc_imgs.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -845,6 +883,11 @@ moc_person_ui.cpp: ../game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qevent.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPoint \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qpoint.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		../game/common/Common.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		moc_predefs.h \
 		/usr/local/Cellar/qt/5.14.1/bin/moc
 	/usr/local/Cellar/qt/5.14.1/bin/moc $(DEFINES) --include /Applications/zju/C++_project/proj/MVVM_level_game/code/build-game-Desktop-Debug/moc_predefs.h -I/usr/local/Cellar/qt/5.14.1/mkspecs/macx-clang -I/Applications/zju/C++_project/proj/MVVM_level_game/code/game -I/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers -I/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers -I/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/usr/local/Cellar/qt/5.14.1/lib ../game/view/person_ui.h -o moc_person_ui.cpp
@@ -866,9 +909,13 @@ moc_view.cpp: ../game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPainter \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpainter.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPaintEvent \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		../game/common/Common.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		../game/command/commands.h \
 		../game/parameter/parameters.h \
-		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
 		moc_predefs.h \
@@ -894,11 +941,11 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-app.o: ../game/app/app.cpp ../game/app/App.h \
+app.o: ../game/app/app.cpp ../game/app/app.h \
 		../game/view_model/ViewModel.h \
 		../game/model/Model.h \
 		../game/model/Person.h \
@@ -932,6 +979,10 @@ app.o: ../game/app/app.cpp ../game/app/App.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPainter \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpainter.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPaintEvent \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		../game/command/FIRE_jump_move_command.h \
 		../game/command/FIRE_left_move_command.h \
 		../game/command/FIRE_right_move_command.h \
@@ -1018,6 +1069,10 @@ main.o: ../game/main.cpp ../game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPainter \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpainter.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPaintEvent \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QApplication \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../game/main.cpp
@@ -1069,7 +1124,11 @@ Person.o: ../game/model/Person.cpp ../game/model/Person.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qrect.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
-		../game/common/Common.h
+		../game/common/Common.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDebug \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdebug.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QtMath \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Person.o ../game/model/Person.cpp
 
 parameters.o: ../game/parameter/parameters.cpp ../game/parameter/parameters.h \
@@ -1085,7 +1144,11 @@ person_ui.o: ../game/view/person_ui.cpp ../game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qevent.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPoint \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qpoint.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
 		../game/common/Common.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDebug \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o person_ui.o ../game/view/person_ui.cpp
@@ -1107,9 +1170,13 @@ view.o: ../game/view/view.cpp ../game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPainter \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpainter.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPaintEvent \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		../game/common/Common.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		../game/command/commands.h \
 		../game/parameter/parameters.h \
-		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
 		ui_view.h \
@@ -1150,6 +1217,9 @@ ViewModel.o: ../game/view_model/ViewModel.cpp ../game/view_model/ViewModel.h \
 		../game/command/commands.h \
 		../game/parameter/parameters.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ViewModel.o ../game/view_model/ViewModel.cpp
+
+qrc_imgs.o: qrc_imgs.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_imgs.o qrc_imgs.cpp
 
 moc_person_ui.o: moc_person_ui.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_person_ui.o moc_person_ui.cpp

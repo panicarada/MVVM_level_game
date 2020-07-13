@@ -1,6 +1,7 @@
 #include "view.h"
 #include "ui_view.h"
 #include <QDebug>
+#include "common/Common.h"
 #include "command/move_command.h"
 
 View::View(QWidget *parent)
@@ -9,8 +10,8 @@ View::View(QWidget *parent)
     , timer(new QTimer) // 定时器
 {
     ui->setupUi(this);
-    fire_person = QSharedPointer<Person_UI>::create(false, this);
-    ice_person = QSharedPointer<Person_UI>::create(true, this);
+    fire_person = QSharedPointer<Person_UI>::create(PersonType::FIRE, this);
+    ice_person = QSharedPointer<Person_UI>::create(PersonType::ICE, this);
     const int GAP = 1; // 每隔0.001秒触发一次槽函数move
     timer->start(GAP);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));

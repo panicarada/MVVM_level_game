@@ -56,3 +56,30 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    source/BGM/BackgroundMusic.mp3 \
+    source/BGM/Death.mp3 \
+    source/BGM/Diamond.mp3 \
+    source/BGM/Door.mp3 \
+    source/BGM/Freeze.mp3 \
+    source/BGM/Jump_fb.mp3 \
+    source/BGM/Jump_wg.mp3 \
+    source/BGM/WaterSteps.mp3 \
+    source/image/backwall.png \
+    source/image/fire_left.png \
+    source/image/fire_right.png \
+    source/image/fire_stand.png \
+    source/image/ice_left.png \
+    source/image/ice_right.png \
+    source/image/ice_stand.png \
+    source/image/source/CharAssets.png \
+    source/image/source/MenuAssets.png \
+    source/image/source/PopupAssets.png \
+    source/image/source/TempleAssets(1).png \
+    source/image/source/TempleAssets(2).png \
+    source/image/source/TempleAssets.png \
+    source/image/source/back.png
+
+RESOURCES += \
+    source/imgs.qrc

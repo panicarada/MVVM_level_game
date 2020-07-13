@@ -72,6 +72,8 @@ void Person::move()
 
     if (multiple)
     { // 与多面墙体相撞，速度设为0
+
+        m_pos -= m_speed;
         m_speed.setX(V_MOTIONLESS);
         m_speed.setY(V_MOTIONLESS);
         return ;
@@ -98,6 +100,8 @@ void Person::move()
         if (wall->isFloor)
         {
             m_isAerial = false;
+
+
             if (wall->segment.angle() > 90)
             {
                 m_pos += V_MOVE * wall_segment * qSin(wall->segment.angle());

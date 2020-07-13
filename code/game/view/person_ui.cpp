@@ -2,21 +2,25 @@
 #include "./common/Common.h"
 #include <QDebug>
 
-Person_UI::Person_UI(const bool &isIce, QWidget *parent) : QWidget(parent), isIce(isIce)
+Person_UI::Person_UI(const PersonType &&type, QWidget *parent) : QWidget(parent), person_type(type)
 {
-
+    qDebug() << ice_stand.load(":/source/image/ice_stand.png");
+    fire_stand.load(":/source/image/fire_stand.png");
 }
+
 
 void Person_UI::paint(QPainter &painter)
 {
-    if (isIce)
+
+    if (person_type == PersonType::ICE)
     {
-        painter.setBrush(Qt::blue);
+        painter.drawPixmap(pos, ice_stand);
     }
     else
     {
-        painter.setBrush(Qt::red);
+        painter.drawPixmap(pos, fire_stand);
     }
+
 //    qDebug() << pos;
     painter.drawLine(QLineF(0, 150, 200, 150));
     painter.drawLine(QLineF(200, 150, 300, 300));
