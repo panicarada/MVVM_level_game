@@ -5,101 +5,91 @@
 
 
 
-void Person::set_map(const std::shared_ptr<Map>& m)
+
+Person::Person(const PersonType &&type, QSharedPointer<Map> &map)
+    : m_speed(QPoint()), m_pos(QPoint()), m_type(type), m_map(map), m_isAerial(false)
 {
-    m_map = m;
+
 }
 
-void Person::set_pos_x(double x) noexcept
+void Person::set_pos(const QPoint &&pos) noexcept
 {
-    m_pos.x = x;
+    m_pos = pos;
 }
 
-double Person::get_pos_x() noexcept
+void Person::set_pos_x(const int &&pos_x) noexcept
 {
-    return m_pos.x;
+    m_pos.setX(pos_x);
 }
 
-void Person::set_pos_y(double y) noexcept
+void Person::set_pos_y(const int &&pos_y) noexcept
 {
-    m_pos.y = y;
+    m_pos.setY(pos_y);
 }
 
-double Person::get_pos_y() noexcept
+void Person::set_speed(const QPoint &&speed) noexcept
 {
-    return m_pos.y;
+    m_speed = speed;
 }
 
-void Person::set_pos(double x, double y) noexcept
+void Person::set_speed_x(const int &&speed_x) noexcept
 {
-    m_pos.x = x;
-    m_pos.y = y;
+    m_speed.setX(speed_x);
 }
 
-const Pos& Person::get_pos() noexcept
+void Person::set_speed_y(const int &&speed_y) noexcept
+{
+    m_speed.setY(speed_y);
+}
+
+const QPoint &Person::get_pos() noexcept
 {
     return m_pos;
 }
 
-void Person::get_pos(double& x, double& y) noexcept
-{
-    x = m_pos.x;
-    y = m_pos.y;
-}
-
-const Pos Person::get_pos_right() noexcept
-{
-    return Pos(m_pos.x + PERSONSIZE_X, m_pos.y);
-}
-
-const std::string& Person::get_name() const noexcept
-{
-    return *m_name.get();
-}
-
-void Person::set_speed_x(double x) noexcept
-{
-    m_speed.x = x;
-}
-
-double Person::get_speed_x() noexcept
-{
-    return m_speed.x;
-}
-
-void Person::set_speed_y(double y) noexcept
-{
-    m_speed.y = y;
-}
-
-double Person::get_speed_y() noexcept
-{
-    return m_speed.y;
-}
-
-Velocity& Person::get_speed() noexcept
+const QPoint &Person::get_speed() noexcept
 {
     return m_speed;
 }
 
-void Person::set_aerial(bool isAerial) noexcept
+const bool &Person::isAerial() noexcept
 {
-    aerial = isAerial;
+    return m_isAerial;
 }
 
 void Person::move()
 {
-    m_pos.x += m_speed.x;
-    m_pos.y += m_speed.y;
+    m_pos += m_speed; // 位置在这一时刻根据速度改变
+    rect.setBottomLeft(m_pos); // 根据人物位置移动矩形
 
-    //»ºÂý¼õËÙ
-    if (aerial)
-        if (m_speed.y > V_GRAVITY + D_SPEED)
-            m_speed.y -= D_SPEED;
-        else m_speed.y = V_GRAVITY;
-    else
-    {
-        m_speed.y = V_MOTIONLESS;
+    auto wall = m_map->intersect(rect);
+    if (wall == nullptr)
+    { // 说明人物在空中，受重力影响，y方向速度降低
+        m_speed -= QPoint(0, DY_SPEED);
+        if (m_speed.y() <= FALL_BOUND)
+        { // 下落速度过快，进行限制
+            m_speed.setY(FALL_BOUND);
+        }
+
+        m_isAerial = true; // 在空中
     }
-    m_speed.x = V_MOTIONLESS;
+    else // 和某面墙相撞
+    {
+        /* 1. 速度在墙面法向分量变为0 */
+        /* 2. 速度平行于墙面的分量保持不变 */
+        QPoint wall_segment = (wall->segment.p1() - wall->segment.p2()).toPoint(); // 墙面对应向量
+        double length = wall->segment.length();
+        m_speed = wall_segment * QPoint::dotProduct(wall_segment, m_speed) / length;
+
+        if (wall->isFloor)
+        {
+            m_isAerial = false;
+        }
+        else
+        {
+            m_isAerial = true;
+        }
+    }
+    // 左右方向的移动是即时性的，若下一时刻没有按左右移动键，x方向上即刻停下
+    m_speed.setX(V_MOTIONLESS);
 }

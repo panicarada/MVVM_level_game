@@ -5,25 +5,35 @@
 #ifndef _MAP_H
 #define _MAP_H
 
-#include "Person.h"
-#include "Geometry.h"
 #include <vector>
+#include <QSet>
+#include <QLineF>
+#include <QPointF>
+#include <QRectF>
+#include <QSharedPointer>
 #include "./common/Common.h"
 
+// 一面墙体的类
+class Wall
+{
+public:
+    // 判断墙面和矩形rect是否相交
+    bool intersect(const QRectF &rect);
+public:
+    QLineF segment; // 墙体对应的线段
+    double norm_angle; // 墙面法向和x轴正方向的夹角，角度制
+    bool isFloor; // 是否为地面（斜坡也可以是地面）
+};
 
 class Map
 {
 public:
     Map();
 
-    void set_ice_person(const std::shared_ptr<Person>& ice) noexcept;
-    void set_fire_person(const std::shared_ptr<Person>& fire) noexcept;
-
-    void splitVelocity(const std::shared_ptr<Person>& p);
+    // 判断矩形是否与某一个墙体相交，是的话返回对应墙体指针，否则返回nullptr
+    QSharedPointer<Wall> intersect(const QRectF & rect);
 private:
-    std::vector<std::shared_ptr<Line>> Walls;
-    std::shared_ptr<Person> ice_person;
-    std::shared_ptr<Person> fire_person;
+    QSet<QSharedPointer<Wall>> walls_set; // 墙体集合
 };
 
 

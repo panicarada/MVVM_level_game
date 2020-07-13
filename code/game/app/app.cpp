@@ -38,13 +38,11 @@ App::App()
     view->set_move_command(move_command);
     view->set_get_ice_pos([&]()
     {
-        Pos p = view_model->get_ice_pos();
-        return QPoint(int(p.x), int(p.y));
+        return view_model->get_ice_pos();
     });
     view->set_get_fire_pos([&]()
     {
-        Pos p = view_model->get_fire_pos();
-        return QPoint(int(p.x), int(p.y));
+        return view_model->get_fire_pos();
     });
 
 }

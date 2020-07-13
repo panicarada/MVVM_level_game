@@ -2,46 +2,51 @@
 
 
 #include"Map.h"
+#include <QRect>
 
 Map::Map()
+    : walls_set(QSet<QSharedPointer<Wall>>())
 {
-        std::shared_ptr<Line> floor = std::static_pointer_cast<Line, Floor>(std::make_shared<Floor>(0, 10, 200, 10));
-        std::shared_ptr<Line> lWall = std::static_pointer_cast<Line, Wall>(std::make_shared<Wall>(0, 10, 0, 110));
-        std::shared_ptr<Line> rWall = std::static_pointer_cast<Line, Wall>(std::make_shared<Wall>(200, 10, 200, 110));
-        Walls.push_back(floor);
-        Walls.push_back(lWall);
-        Walls.push_back(rWall);
+
 }
 
-void Map::set_ice_person(const std::shared_ptr<Person>& ice) noexcept
+QSharedPointer<Wall> Map::intersect(const QRectF &rect)
 {
-        ice_person = ice;
-}
-
-void Map::set_fire_person(const std::shared_ptr<Person>& fire) noexcept
-{
-        fire_person = fire;
-}
-
-void Map::splitVelocity(const std::shared_ptr<Person>& p)
-{
-        bool aerial = true;
-        auto iter(Walls.begin());
-        for (; iter != Walls.end(); ++iter)
+    for (auto wall : walls_set)
+    { // 遍历每个墙体
+        if (wall->intersect(rect))
         {
-                if (((*iter)->location(p->get_pos()) == 0 && p->get_speed_x() <= 0) || ((*iter)->location(p->get_pos_right()) == 0 && p->get_speed_x() >= 0))
-                {
-                        aerial = false;
-                        if ((!(*iter)->isRoof() && p->get_speed_y() > 0) || (*iter)->isRoof() || (p->isAerial() && (*iter)->isWall()))//起跳或撞到天花板或碰到墙
-                        {
-                                p->set_aerial(true);
-                        }
-                        else p->set_aerial(false);//落地或沿地面移动
-                        p->get_speed().split(*iter);
-                }
+            return wall;
         }
-        if (aerial)
-        {
-                p->set_aerial(true);
-        }
+    }
+    return nullptr;
+}
+
+bool Wall::intersect(const QRectF &rect)
+{ // 判断线段与（实心）矩形相交
+  /* （1）线段在矩形内部，等价于两个点都在矩形内部 */
+  if (rect.contains(segment.p1().toPoint()) && rect.contains(segment.p2().toPoint()))
+  {
+      return true;
+  }
+
+  /* （2）线段与矩形四个边中任意一个相交 */
+  if (segment.intersects(QLineF(rect.topLeft(), rect.topRight()), nullptr) == QLineF::BoundedIntersection)
+  {
+      return true;
+  }
+  if (segment.intersects(QLineF(rect.topRight(), rect.bottomRight()), nullptr) == QLineF::BoundedIntersection)
+  {
+      return true;
+  }
+  if (segment.intersects(QLineF(rect.bottomRight(), rect.bottomLeft()), nullptr) == QLineF::BoundedIntersection)
+  {
+      return true;
+  }
+  if (segment.intersects(QLineF(rect.bottomLeft(), rect.topLeft()), nullptr) == QLineF::BoundedIntersection)
+  {
+      return true;
+  }
+
+  return false;
 }

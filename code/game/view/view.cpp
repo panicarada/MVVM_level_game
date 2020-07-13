@@ -11,7 +11,7 @@ View::View(QWidget *parent)
     ui->setupUi(this);
     fire_person = QSharedPointer<Person_UI>::create(false, this);
     ice_person = QSharedPointer<Person_UI>::create(true, this);
-    const int GAP = 100; // 每隔0.1秒触发一次槽函数move
+    const int GAP = 10; // 每隔0.1秒触发一次槽函数move
     timer->start(GAP);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 }

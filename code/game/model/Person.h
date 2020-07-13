@@ -5,61 +5,47 @@
 #ifndef _PERSON_H
 #define _PERSON_H
 
-#include<memory>
-#include<string>
-#include"Geometry.h"
+#include <memory>
+#include <string>
+#include <QPoint>
+#include "Map.h"
 #include "./common/Common.h"
-
-class Map;
 
 class Person
 {
 public:
-    Person() noexcept :m_pos(0, 0), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(V_MOTIONLESS, V_MOTIONLESS), aerial(false) {}
-    Person(std::string name) noexcept :m_pos(0, 0), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(V_MOTIONLESS, V_MOTIONLESS), aerial(false)
+    Person() = delete; // 拒绝空构造器
+    Person(const PersonType &&type, QSharedPointer<Map> &map);
 
-    {
-        m_name = std::make_shared<std::string>(name);
-    }
+    // 设置人物位置
+    void set_pos(const QPoint &&pos) noexcept;
+    void set_pos_x(const int &&pos_x) noexcept;
+    void set_pos_y(const int &&pos_y) noexcept;
+    // 设置人物速度
+    void set_speed(const QPoint &&speed) noexcept;
+    void set_speed_x(const int &&speed_x) noexcept;
+    void set_speed_y(const int &&speed_y) noexcept;
 
-    Person(const Person& p) noexcept :
-        m_name(p.m_name), m_map(p.m_map), m_pos(p.m_pos), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(p.m_speed), aerial(p.aerial) {}
-    Person(Person&& p) noexcept:
-        m_name(p.m_name), m_map(p.m_map), m_pos(p.m_pos), m_sizeX(PERSONSIZE_X), m_sizeY(PERSONSIZE_Y), m_speed(p.m_speed), aerial(p.aerial) {}
-
-
-    void set_map(const std::shared_ptr<Map>& m);
-
-    void set_pos_x(double x)noexcept;
-    double get_pos_x() noexcept;
-    void set_pos_y(double y) noexcept;
-    double get_pos_y() noexcept;
-    void set_pos(double x, double y) noexcept;
-    const Pos& get_pos() noexcept;
-    void get_pos(double& x, double& y) noexcept;
-    const Pos get_pos_right() noexcept;
-
-    const std::string& get_name() const noexcept;
-
-    void set_speed_x(double x) noexcept;
-    double get_speed_x() noexcept;
-    void set_speed_y(double y) noexcept;
-    double get_speed_y() noexcept;
-    Velocity& get_speed() noexcept;
-
-    void set_aerial(bool isAerial) noexcept;
-    bool isAerial() noexcept { return aerial; }
+    const QPoint& get_pos() noexcept;
+    const QPoint& get_speed() noexcept;
+    const bool& isAerial() noexcept; // 是否在空中
 
     void move();
 
 private:
-    std::shared_ptr<std::string> m_name;
-    std::shared_ptr<Map> m_map;
-    Velocity m_speed;
-    Pos m_pos;
-    double m_sizeX;
-    double m_sizeY;
-    bool aerial;
+    /* 注：此时为了方便，坐标系定为 */
+    /*       ^ y
+     *      |
+     *      |
+     *     O ------> x
+     */
+
+    QPoint m_speed; // 人的速度
+    QPoint m_pos; // 人的位置
+    QRectF rect; // 人所对应的矩形，m_pos是其左下角
+    PersonType m_type; // 是否是冰人
+    QSharedPointer<Map> m_map; // 指向地图的指针
+    bool m_isAerial; // 是否在空中
 };
 
 

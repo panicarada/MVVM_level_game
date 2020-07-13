@@ -21,7 +21,6 @@ SOURCES += \
     command/game_status_command.cpp \
     command/move_command.cpp \
     main.cpp \
-    model/Geometry.cpp \
     model/Map.cpp \
     model/Model.cpp \
     model/Person.cpp \
@@ -42,7 +41,6 @@ HEADERS += \
     command/game_status_command.h \
     command/move_command.h \
     common/Common.h \
-    model/Geometry.h \
     model/Map.h \
     model/Model.h \
     model/Person.h \
