@@ -11,7 +11,7 @@ View::View(QWidget *parent)
     ui->setupUi(this);
     fire_person = QSharedPointer<Person_UI>::create(false, this);
     ice_person = QSharedPointer<Person_UI>::create(true, this);
-    const int GAP = 10; // 每隔0.1秒触发一次槽函数move
+    const int GAP = 1; // 每隔0.001秒触发一次槽函数move
     timer->start(GAP);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 }
@@ -99,13 +99,10 @@ void View::keyReleaseEvent(QKeyEvent *event)
 void View::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    // 变换y轴
-    QPoint ice_pos = get_ice_pos();
-    ice_pos.setY(this->height() - ice_pos.y());
-    ice_person->set_pos(ice_pos);
-    QPoint fire_pos = get_fire_pos();
-    fire_pos.setY(this->height() - fire_pos.y());
-    fire_person->set_pos(fire_pos);
+
+
+    ice_person->set_pos(get_ice_pos());
+    fire_person->set_pos(get_fire_pos());
 
     ice_person->paint(painter);
     fire_person->paint(painter);

@@ -1,4 +1,4 @@
-#include "App.h"
+#include "app.h"
 #include "./command/FIRE_jump_move_command.h"
 #include "./command/FIRE_left_move_command.h"
 #include "./command/FIRE_right_move_command.h"

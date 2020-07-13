@@ -18,10 +18,10 @@ class Wall
 {
 public:
     // 判断墙面和矩形rect是否相交
+    Wall(const QLineF &&segment, bool &&isFloor);
     bool intersect(const QRectF &rect);
 public:
     QLineF segment; // 墙体对应的线段
-    double norm_angle; // 墙面法向和x轴正方向的夹角，角度制
     bool isFloor; // 是否为地面（斜坡也可以是地面）
 };
 
@@ -31,7 +31,7 @@ public:
     Map();
 
     // 判断矩形是否与某一个墙体相交，是的话返回对应墙体指针，否则返回nullptr
-    QSharedPointer<Wall> intersect(const QRectF & rect);
+    QSharedPointer<Wall> intersect(const QRectF & rect, bool &multiple);
 private:
     QSet<QSharedPointer<Wall>> walls_set; // 墙体集合
 };

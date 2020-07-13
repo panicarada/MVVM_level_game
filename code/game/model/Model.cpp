@@ -7,11 +7,11 @@
 
 Model::Model() noexcept
     : m_map(QSharedPointer<Map>::create()),
-      ice_person(QSharedPointer<Person>::create(PersonType::ICE, m_map)),
-      fire_person(QSharedPointer<Person>::create(PersonType::FIRE, m_map))
+      ice_person(QSharedPointer<Person>::create(m_map)),
+      fire_person(QSharedPointer<Person>::create(m_map))
 {
-    ice_person->set_pos(QPoint(150, 10)); // 设置冰人初始位置
-    fire_person->set_pos(QPoint(6, 10)); // 火人初始位置
+    ice_person->set_pos(QPoint(150, 100)); // 设置冰人初始位置
+    fire_person->set_pos(QPoint(6, 100)); // 火人初始位置
 }
 
 void Model::set_speed(double v_x, double v_y, PersonType &&type) noexcept
@@ -30,11 +30,11 @@ void Model::set_speed_x(double v_x, PersonType &&type) noexcept
 {
     if (type == PersonType::ICE)
     {
-        ice_person->set_speed_x(int(v_x));
+        ice_person->set_speed_x(std::move(v_x));
     }
     else
     {
-        fire_person->set_speed_x(int(v_x));
+        fire_person->set_speed_x(std::move(v_x));
     }
 }
 
@@ -42,11 +42,11 @@ void Model::set_speed_y(double v_y, PersonType &&type) noexcept
 {
     if (type == PersonType::ICE)
     {
-        ice_person->set_speed_y(int(v_y));
+        ice_person->set_speed_y(std::move(v_y));
     }
     else
     {
-        fire_person->set_speed_y(int(v_y));
+        fire_person->set_speed_y(std::move(v_y));
     }
 }
 
