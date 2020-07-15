@@ -22,12 +22,12 @@ void Person_UI::paint(QPainter &painter)
     }
 
 //    qDebug() << pos;
-    painter.drawLine(QLineF(0, 150, 200, 150));
-    painter.drawLine(QLineF(200, 150, 300, 300));
-    painter.drawLine(QLineF(100, 60, 300, 40));
-    painter.drawLine(QLineF(300, 300, 500, 400));
-    painter.drawLine(QLineF(500, 400, 500, 300));
-    painter.drawLine(QLineF(500, 300, 700, 100));
+    painter.drawLine(QLineF(0, 150, 200, 150)); // FLOOR
+    painter.drawLine(QLineF(200, 150, 300, 300)); // SLOPE
+    painter.drawLine(QLineF(0, 60, 400, 60)); // CEIL
+    painter.drawLine(QLineF(300, 300, 500, 400)); // SLOPE
+    painter.drawLine(QLineF(500, 400, 500, 301)); // RIGHT_BLOCK
+    painter.drawLine(QLineF(501, 300, 700, 300)); // FLOOR
 
 
     painter.drawRect(pos.x(), pos.y(), PERSONSIZE_X, PERSONSIZE_Y);

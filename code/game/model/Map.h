@@ -13,17 +13,30 @@
 #include <QSharedPointer>
 #include "./common/Common.h"
 
+
 // 一面墙体的类
 class Wall
 {
 public:
     // 判断墙面和矩形rect是否相交
-    Wall(const QLineF &&segment, bool &&isFloor);
+    Wall(const QLineF &&segment, const WallType &&wall_type);
     bool intersect(const QRectF &rect);
 public:
     QLineF segment; // 墙体对应的线段
-    bool isFloor; // 是否为地面（斜坡也可以是地面）
+    WallType wall_type; // 墙体类型
 };
+
+
+
+struct Wall_crashed_union
+{ // 储存碰撞墙体的结构，同一类型的墙体只有可能一个发生碰撞
+    QSharedPointer<Wall> left_block; // 左墙
+    QSharedPointer<Wall> right_block; // 右墙
+    QSharedPointer<Wall> ceil; // 天花板
+    QSharedPointer<Wall> floor; // 地板
+    QSharedPointer<Wall> slope; // 斜坡
+};
+
 
 class Map
 {
@@ -31,7 +44,7 @@ public:
     Map();
 
     // 判断矩形是否与某一个墙体相交，是的话返回对应墙体指针，否则返回nullptr
-    QSharedPointer<Wall> intersect(const QRectF & rect, bool &multiple);
+    QSharedPointer<Wall_crashed_union> intersect(const QRectF & rect);
 private:
     QSet<QSharedPointer<Wall>> walls_set; // 墙体集合
 };

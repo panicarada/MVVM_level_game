@@ -7,37 +7,53 @@
 Map::Map()
     : walls_set(QSet<QSharedPointer<Wall>>())
 {
-    walls_set.insert(QSharedPointer<Wall>::create(QLineF(0, 150, 200, 150), true));
-    walls_set.insert(QSharedPointer<Wall>::create(QLineF(200, 150, 300, 300), true));
-    walls_set.insert(QSharedPointer<Wall>::create(QLineF(100, 60, 300, 40), false));
-    walls_set.insert(QSharedPointer<Wall>::create(QLineF(300, 300, 500, 400), true));
-    walls_set.insert(QSharedPointer<Wall>::create(QLineF(500, 400, 500, 300), false));
-    walls_set.insert(QSharedPointer<Wall>::create(QLineF(500, 300, 700, 100), true));
-
-
-
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(0, 150, 200, 150), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(200, 150, 300, 300), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(0, 60, 400, 60), CEIL));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(300, 300, 500, 400), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(500, 400, 500, 301), RIGHT_BLOCK));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(501, 300, 700, 300), FLOOR));
 }
 
-QSharedPointer<Wall> Map::intersect(const QRectF &rect, bool &multiple)
-{ // multiple: 是否和多个墙体接触
-    QSharedPointer<Wall> crashed_wall = nullptr;
+QSharedPointer<Wall_crashed_union> Map::intersect(const QRectF &rect)
+{
+    QSharedPointer<Wall_crashed_union> crashed_walls = nullptr;
     for (auto wall : walls_set)
     { // 遍历每个墙体
         if (wall->intersect(rect))
         {
-            if (crashed_wall != nullptr)
+            if (crashed_walls == nullptr)
             {
-                multiple = true;
-                return crashed_wall;
+                crashed_walls = QSharedPointer<Wall_crashed_union>::create();
             }
-            crashed_wall = wall;
+            if (wall->wall_type == FLOOR)
+            {
+                crashed_walls->floor = wall;
+            }
+            else if (wall->wall_type == CEIL)
+            {
+                crashed_walls->ceil = wall;
+            }
+            else if (wall->wall_type == LEFT_BLOCK)
+            {
+                crashed_walls->left_block = wall;
+            }
+            else if (wall->wall_type == RIGHT_BLOCK)
+            {
+                crashed_walls->right_block = wall;
+            }
+            else if (wall->wall_type == SLOPE)
+            {
+                crashed_walls->slope = wall;
+            }
         }
     }
-    return crashed_wall;
+    return crashed_walls;
 }
 
-Wall::Wall(const QLineF &&segment, bool &&isFloor)
-    : segment(segment), isFloor(isFloor)
+
+Wall::Wall(const QLineF &&segment, const WallType &&wall_type)
+    : segment(segment), wall_type(wall_type)
 {
 
 }
