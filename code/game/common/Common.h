@@ -35,7 +35,7 @@ enum PersonType // 人的类型
 };
 
 enum WallType // 墙体类型
-{ // 碰撞检测中，存在优先级BLOCK = CEIL > FLOOR > SLOPE
+{ // 碰撞检测中
     SLOPE = 0, // 斜面
     FLOOR = 1, // 地板
     LEFT_BLOCK = 2, // 左墙，检测到碰撞后立刻退回原地
