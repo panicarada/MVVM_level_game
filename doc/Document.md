@@ -71,7 +71,7 @@
 
 #### 4.1 框架描述
 
-游戏采用MVVM (Model- View- ViewModel) 架构，主要由视图 (View)、视图模型 (ViewModel)、模 型 (Model)、App层四部分组成，通过这四部分实现 UI 逻辑、呈现逻辑和状态控制、数据与业务逻辑的分离，实现了模块的独立开发。
+游戏采用MVVM (Model- View- ViewModel) 架构，主要由视图 (View)、视图模型 (ViewModel)、模型 (Model)、App层四部分组成，通过这四部分实现 UI 逻辑、呈现逻辑和状态控制、数据与业务逻辑的分离，实现了模块的独立开发。
 
 ##### Common
 

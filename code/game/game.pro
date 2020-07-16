@@ -24,7 +24,6 @@ SOURCES += \
     model/Map.cpp \
     model/Model.cpp \
     model/Person.cpp \
-    parameter/parameters.cpp \
     view/person_ui.cpp \
     view/view.cpp \
     view_model/ViewModel.cpp

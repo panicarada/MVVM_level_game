@@ -60,7 +60,6 @@ SOURCES       = ../game/app/app.cpp \
 		../game/model/Map.cpp \
 		../game/model/Model.cpp \
 		../game/model/Person.cpp \
-		../game/parameter/parameters.cpp \
 		../game/view/person_ui.cpp \
 		../game/view/view.cpp \
 		../game/view_model/ViewModel.cpp qrc_imgs.cpp \
@@ -74,7 +73,6 @@ OBJECTS       = app.o \
 		Map.o \
 		Model.o \
 		Person.o \
-		parameters.o \
 		person_ui.o \
 		view.o \
 		ViewModel.o \
@@ -326,7 +324,7 @@ DIST          = ../game/source/BGM/BackgroundMusic.mp3 \
 		../game/model/Map.h \
 		../game/model/Model.h \
 		../game/model/Person.h \
-		../game/parameter/parameters.h \
+		parameter/parameters.h \
 		../game/view/person_ui.h \
 		../game/view/view.h \
 		../game/view_model/ViewModel.h ../game/app/app.cpp \
@@ -337,7 +335,6 @@ DIST          = ../game/source/BGM/BackgroundMusic.mp3 \
 		../game/model/Map.cpp \
 		../game/model/Model.cpp \
 		../game/model/Person.cpp \
-		../game/parameter/parameters.cpp \
 		../game/view/person_ui.cpp \
 		../game/view/view.cpp \
 		../game/view_model/ViewModel.cpp
@@ -823,8 +820,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../game/source/imgs.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Cellar/qt/5.14.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../game/app/app.h ../game/command/FIRE_jump_move_command.h ../game/command/FIRE_left_move_command.h ../game/command/FIRE_right_move_command.h ../game/command/ICE_jump_move_command.h ../game/command/ICE_left_move_command.h ../game/command/ICE_right_move_command.h ../game/command/commands.h ../game/command/game_status_command.h ../game/command/move_command.h ../game/common/Common.h ../game/model/Map.h ../game/model/Model.h ../game/model/Person.h ../game/parameter/parameters.h ../game/view/person_ui.h ../game/view/view.h ../game/view_model/ViewModel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../game/app/app.cpp ../game/command/commands.cpp ../game/command/game_status_command.cpp ../game/command/move_command.cpp ../game/main.cpp ../game/model/Map.cpp ../game/model/Model.cpp ../game/model/Person.cpp ../game/parameter/parameters.cpp ../game/view/person_ui.cpp ../game/view/view.cpp ../game/view_model/ViewModel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../game/app/app.h ../game/command/FIRE_jump_move_command.h ../game/command/FIRE_left_move_command.h ../game/command/FIRE_right_move_command.h ../game/command/ICE_jump_move_command.h ../game/command/ICE_left_move_command.h ../game/command/ICE_right_move_command.h ../game/command/commands.h ../game/command/game_status_command.h ../game/command/move_command.h ../game/common/Common.h ../game/model/Map.h ../game/model/Model.h ../game/model/Person.h parameter/parameters.h ../game/view/person_ui.h ../game/view/view.h ../game/view_model/ViewModel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../game/app/app.cpp ../game/command/commands.cpp ../game/command/game_status_command.cpp ../game/command/move_command.cpp ../game/main.cpp ../game/model/Map.cpp ../game/model/Model.cpp ../game/model/Person.cpp ../game/view/person_ui.cpp ../game/view/view.cpp ../game/view_model/ViewModel.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../game/view/view.ui $(DISTDIR)/
 
 
@@ -915,7 +912,6 @@ moc_view.cpp: ../game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		../game/command/commands.h \
-		../game/parameter/parameters.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
 		moc_predefs.h \
@@ -965,7 +961,6 @@ app.o: ../game/app/app.cpp ../game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedDataPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qshareddata.h \
 		../game/command/commands.h \
-		../game/parameter/parameters.h \
 		../game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QMainWindow \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qmainwindow.h \
@@ -996,24 +991,18 @@ app.o: ../game/app/app.cpp ../game/app/app.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o ../game/app/app.cpp
 
 commands.o: ../game/command/commands.cpp ../game/command/commands.h \
-		../game/parameter/parameters.h \
-		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o commands.o ../game/command/commands.cpp
 
 game_status_command.o: ../game/command/game_status_command.cpp ../game/command/game_status_command.h \
 		../game/command/commands.h \
-		../game/parameter/parameters.h \
-		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game_status_command.o ../game/command/game_status_command.cpp
 
 move_command.o: ../game/command/move_command.cpp ../game/command/move_command.h \
 		../game/command/commands.h \
-		../game/parameter/parameters.h \
-		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
 		../game/view_model/ViewModel.h \
@@ -1029,6 +1018,7 @@ move_command.o: ../game/command/move_command.cpp ../game/command/move_command.h 
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPointF \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QRectF \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qrect.h \
+		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedDataPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qshareddata.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDebug \
@@ -1055,7 +1045,6 @@ main.o: ../game/main.cpp ../game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedDataPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qshareddata.h \
 		../game/command/commands.h \
-		../game/parameter/parameters.h \
 		../game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QMainWindow \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qmainwindow.h \
@@ -1131,10 +1120,6 @@ Person.o: ../game/model/Person.cpp ../game/model/Person.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Person.o ../game/model/Person.cpp
 
-parameters.o: ../game/parameter/parameters.cpp ../game/parameter/parameters.h \
-		../game/common/Common.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parameters.o ../game/parameter/parameters.cpp
-
 person_ui.o: ../game/view/person_ui.cpp ../game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1176,7 +1161,6 @@ view.o: ../game/view/view.cpp ../game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
 		../game/command/commands.h \
-		../game/parameter/parameters.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
 		ui_view.h \
@@ -1214,8 +1198,7 @@ ViewModel.o: ../game/view_model/ViewModel.cpp ../game/view_model/ViewModel.h \
 		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedDataPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qshareddata.h \
-		../game/command/commands.h \
-		../game/parameter/parameters.h
+		../game/command/commands.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ViewModel.o ../game/view_model/ViewModel.cpp
 
 qrc_imgs.o: qrc_imgs.cpp 
