@@ -75,23 +75,23 @@
 
 ##### Common
 
-全局的宏定义、枚举类型
+全局的宏定义、枚举类型。
 
 ##### Model & View Model
 
-操作实体的内部定义，内部逻辑的实现
+操作实体的内部定义，内部逻辑的实现。实现碰撞检测、人物位置更新等等功能。
 
 ##### View
 
-处理界面反馈逻辑（键盘事件，定时器），以及绘制界面功能
+处理界面反馈逻辑（键盘事件，定时器），以及绘制界面功能。用`command->exec()`的形式在接入Model&View Model层的功能。如果需要访问Model层的数据，在类内定义对应对应的仿函数。如`std::function<QPoint(void)> get_ice_pos`是获取冰人位置的仿函数，在App层再利用lambda表达式，绑定到Model & View Model层提供的访问接口上。
 
 ##### Command
 
-操作指令，纯虚类作为View中接口
+操作指令，纯虚类`Commands`作为View中接口。具体的指令是其子类，命名为`功能_command`，重载`void exec()`时调用Model & View Model模块。
 
 ##### App
 
-将View层的共享指针、仿函数绑定到Model&View Model上
+将View层的共享指针、仿函数绑定到Model&View Model上。
 
 
 
