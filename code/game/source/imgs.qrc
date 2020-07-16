@@ -1,10 +1,7 @@
 <RCC>
     <qresource prefix="/source">
-        <file>image/ice_stand.png</file>
-        <file>image/fire_left.png</file>
-        <file>image/fire_right.png</file>
-        <file>image/fire_stand.png</file>
-        <file>image/ice_left.png</file>
-        <file>image/ice_right.png</file>
+        <file>image/Assets_left.png</file>
+        <file>image/Assets.png</file>
+        <file>image/demo_back.png</file>
     </qresource>
 </RCC>

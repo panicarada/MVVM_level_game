@@ -16,6 +16,7 @@ App::App()
     model = QSharedPointer<Model>::create();
     view_model = QSharedPointer<ViewModel>::create();
     view = QSharedPointer<View>::create();
+    view->resize(1200, 900); //分辨率
 
     /* 创建command */
     auto fire_jump_move_command = QSharedPointer<Fire_jump_move_command>::create(view_model);
@@ -44,11 +45,19 @@ App::App()
     {
         return view_model->get_fire_pos();
     });
-
+    view->set_get_ice_speed([&]()
+    {
+        return view_model->get_ice_speed();
+    });
+    view->set_get_fire_speed([&]()
+    {
+        return view_model->get_fire_speed();
+    });
 }
 
 
 void App::run()
 {
+    view->resize(1200, 900); //分辨率
     view->show();
 }

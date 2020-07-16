@@ -27,15 +27,19 @@ class Person_UI : public QWidget
     Q_OBJECT
 public:
     explicit Person_UI(const PersonType &&person_type, QWidget *parent = nullptr);
-    void paint(QPainter &);
+    void paint(QPainter &, int Frame);
     void set_pos(const QPoint &pos);
+    void set_speed(const QPoint &speed);
     void set_status(const PersonStatus &&status);
 private:
     QPoint pos; // 位置
-    PersonType person_type;
+    QPoint speed; // 速度
+    PersonType person_type; // 人物类型
     PersonStatus person_status; // 人物形态
-    QPixmap ice_stand; // 冰人静止图像
-    QPixmap fire_stand; // 火人静止图像
+
+
+    QPixmap Assets;
+    QPixmap Assets_left;
 };
 
 

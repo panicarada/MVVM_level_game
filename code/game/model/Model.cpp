@@ -62,6 +62,18 @@ const QPoint &Model::get_pos(PersonType &&type) noexcept
     }
 }
 
+const QPoint &Model::get_speed(PersonType &&type) noexcept
+{
+    if (type == PersonType::ICE)
+    {
+        return ice_person->get_speed();
+    }
+    else
+    {
+        return fire_person->get_speed();
+    }
+}
+
 const bool &Model::isAerial(PersonType &&type) noexcept
 {
     if (type == PersonType::ICE)

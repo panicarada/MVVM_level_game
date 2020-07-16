@@ -16,6 +16,8 @@ public:
 
     const QPoint& get_ice_pos();
     const QPoint& get_fire_pos();
+    const QPoint& get_ice_speed();
+    const QPoint& get_fire_speed();
 
     void Exec_Ice_left_command();
     void Exec_Ice_right_command();

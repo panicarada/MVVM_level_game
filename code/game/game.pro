@@ -24,6 +24,7 @@ SOURCES += \
     model/Map.cpp \
     model/Model.cpp \
     model/Person.cpp \
+    view/map_ui.cpp \
     view/person_ui.cpp \
     view/view.cpp \
     view_model/ViewModel.cpp
@@ -44,6 +45,7 @@ HEADERS += \
     model/Model.h \
     model/Person.h \
     parameter/parameters.h \
+    view/map_ui.h \
     view/person_ui.h \
     view/view.h \
     view_model/ViewModel.h

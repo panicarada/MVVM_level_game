@@ -60,9 +60,11 @@ SOURCES       = ../game/app/app.cpp \
 		../game/model/Map.cpp \
 		../game/model/Model.cpp \
 		../game/model/Person.cpp \
+		../game/view/map_ui.cpp \
 		../game/view/person_ui.cpp \
 		../game/view/view.cpp \
 		../game/view_model/ViewModel.cpp qrc_imgs.cpp \
+		moc_map_ui.cpp \
 		moc_person_ui.cpp \
 		moc_view.cpp
 OBJECTS       = app.o \
@@ -73,10 +75,12 @@ OBJECTS       = app.o \
 		Map.o \
 		Model.o \
 		Person.o \
+		map_ui.o \
 		person_ui.o \
 		view.o \
 		ViewModel.o \
 		qrc_imgs.o \
+		moc_map_ui.o \
 		moc_person_ui.o \
 		moc_view.o
 DIST          = ../game/source/BGM/BackgroundMusic.mp3 \
@@ -325,6 +329,7 @@ DIST          = ../game/source/BGM/BackgroundMusic.mp3 \
 		../game/model/Model.h \
 		../game/model/Person.h \
 		parameter/parameters.h \
+		../game/view/map_ui.h \
 		../game/view/person_ui.h \
 		../game/view/view.h \
 		../game/view_model/ViewModel.h ../game/app/app.cpp \
@@ -335,6 +340,7 @@ DIST          = ../game/source/BGM/BackgroundMusic.mp3 \
 		../game/model/Map.cpp \
 		../game/model/Model.cpp \
 		../game/model/Person.cpp \
+		../game/view/map_ui.cpp \
 		../game/view/person_ui.cpp \
 		../game/view/view.cpp \
 		../game/view_model/ViewModel.cpp
@@ -820,8 +826,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../game/source/imgs.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Cellar/qt/5.14.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../game/app/app.h ../game/command/FIRE_jump_move_command.h ../game/command/FIRE_left_move_command.h ../game/command/FIRE_right_move_command.h ../game/command/ICE_jump_move_command.h ../game/command/ICE_left_move_command.h ../game/command/ICE_right_move_command.h ../game/command/commands.h ../game/command/game_status_command.h ../game/command/move_command.h ../game/common/Common.h ../game/model/Map.h ../game/model/Model.h ../game/model/Person.h parameter/parameters.h ../game/view/person_ui.h ../game/view/view.h ../game/view_model/ViewModel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../game/app/app.cpp ../game/command/commands.cpp ../game/command/game_status_command.cpp ../game/command/move_command.cpp ../game/main.cpp ../game/model/Map.cpp ../game/model/Model.cpp ../game/model/Person.cpp ../game/view/person_ui.cpp ../game/view/view.cpp ../game/view_model/ViewModel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../game/app/app.h ../game/command/FIRE_jump_move_command.h ../game/command/FIRE_left_move_command.h ../game/command/FIRE_right_move_command.h ../game/command/ICE_jump_move_command.h ../game/command/ICE_left_move_command.h ../game/command/ICE_right_move_command.h ../game/command/commands.h ../game/command/game_status_command.h ../game/command/move_command.h ../game/common/Common.h ../game/model/Map.h ../game/model/Model.h ../game/model/Person.h parameter/parameters.h ../game/view/map_ui.h ../game/view/person_ui.h ../game/view/view.h ../game/view_model/ViewModel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../game/app/app.cpp ../game/command/commands.cpp ../game/command/game_status_command.cpp ../game/command/move_command.cpp ../game/main.cpp ../game/model/Map.cpp ../game/model/Model.cpp ../game/model/Person.cpp ../game/view/map_ui.cpp ../game/view/person_ui.cpp ../game/view/view.cpp ../game/view_model/ViewModel.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../game/view/view.ui $(DISTDIR)/
 
 
@@ -854,12 +860,9 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imgs.cpp
 qrc_imgs.cpp: ../game/source/imgs.qrc \
 		/usr/local/Cellar/qt/5.14.1/bin/rcc \
-		../game/source/image/fire_stand.png \
-		../game/source/image/fire_right.png \
-		../game/source/image/ice_stand.png \
-		../game/source/image/fire_left.png \
-		../game/source/image/ice_left.png \
-		../game/source/image/ice_right.png
+		../game/source/image/Assets_left.png \
+		../game/source/image/Assets.png \
+		../game/source/image/demo_back.png
 	/usr/local/Cellar/qt/5.14.1/bin/rcc -name imgs ../game/source/imgs.qrc -o qrc_imgs.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -868,9 +871,24 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Cellar/qt/5.14.1/mkspecs/features/data/dummy.cpp
 	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.13 -Wall -Wextra -dM -E -o moc_predefs.h /usr/local/Cellar/qt/5.14.1/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_person_ui.cpp moc_view.cpp
+compiler_moc_header_make_all: moc_map_ui.cpp moc_person_ui.cpp moc_view.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_person_ui.cpp moc_view.cpp
+	-$(DEL_FILE) moc_map_ui.cpp moc_person_ui.cpp moc_view.cpp
+moc_map_ui.cpp: ../game/view/map_ui.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
+		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPainter \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpainter.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPaintEvent \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qevent.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPoint \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qpoint.h \
+		moc_predefs.h \
+		/usr/local/Cellar/qt/5.14.1/bin/moc
+	/usr/local/Cellar/qt/5.14.1/bin/moc $(DEFINES) --include /Applications/zju/C++_project/proj/MVVM_level_game/code/build-game-Desktop-Debug/moc_predefs.h -I/usr/local/Cellar/qt/5.14.1/mkspecs/macx-clang -I/Applications/zju/C++_project/proj/MVVM_level_game/code/game -I/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers -I/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers -I/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/usr/local/Cellar/qt/5.14.1/lib ../game/view/map_ui.h -o moc_map_ui.cpp
+
 moc_person_ui.cpp: ../game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -911,6 +929,7 @@ moc_view.cpp: ../game/view/view.h \
 		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
+		../game/view/map_ui.h \
 		../game/command/commands.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
@@ -978,6 +997,7 @@ app.o: ../game/app/app.cpp ../game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
+		../game/view/map_ui.h \
 		../game/command/FIRE_jump_move_command.h \
 		../game/command/FIRE_left_move_command.h \
 		../game/command/FIRE_right_move_command.h \
@@ -1062,6 +1082,7 @@ main.o: ../game/main.cpp ../game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
+		../game/view/map_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QApplication \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../game/main.cpp
@@ -1120,6 +1141,21 @@ Person.o: ../game/model/Person.cpp ../game/model/Person.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Person.o ../game/model/Person.cpp
 
+map_ui.o: ../game/view/map_ui.cpp ../game/view/map_ui.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
+		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPainter \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpainter.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPixmap \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qpixmap.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QPaintEvent \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qevent.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPoint \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qpoint.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDebug \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o map_ui.o ../game/view/map_ui.cpp
+
 person_ui.o: ../game/view/person_ui.cpp ../game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1160,6 +1196,7 @@ view.o: ../game/view/view.cpp ../game/view/view.h \
 		../game/common/Common.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDir \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdir.h \
+		../game/view/map_ui.h \
 		../game/command/commands.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QSharedPointer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
@@ -1203,6 +1240,9 @@ ViewModel.o: ../game/view_model/ViewModel.cpp ../game/view_model/ViewModel.h \
 
 qrc_imgs.o: qrc_imgs.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_imgs.o qrc_imgs.cpp
+
+moc_map_ui.o: moc_map_ui.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_map_ui.o moc_map_ui.cpp
 
 moc_person_ui.o: moc_person_ui.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_person_ui.o moc_person_ui.cpp

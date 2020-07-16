@@ -56,3 +56,14 @@ const QPoint& ViewModel::get_fire_pos()
 {
     return m_model->get_pos(PersonType::FIRE);
 }
+
+const QPoint &ViewModel::get_ice_speed()
+{
+    return m_model->get_speed(PersonType::ICE);
+}
+
+const QPoint &ViewModel::get_fire_speed()
+{
+    return m_model->get_speed(PersonType::FIRE);
+}
+
