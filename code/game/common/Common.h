@@ -10,7 +10,13 @@ enum GameStatus
     reset, // 游戏重启
 };
 
-
+/* 注：坐标系为 */
+/*     O ------> x
+ *     |                     |
+ *     |         画面        |
+ *     |                    |
+ *     v y
+ */
 #define PERSONSIZE_X 20
 #define PERSONSIZE_Y 30
 
@@ -19,13 +25,6 @@ enum GameStatus
 #define V_MOVE 0.15           // 左右移动速度
 #define DY_SPEED 0.004 		// 受重力影响的速度改变量
 #define FALL_BOUND 0.7		// 下落过程最大速度
-/* 注：坐标系为 */
-/*     O ------> x
- *     |                     |
- *     |         画面        |
- *     |                    |
- *     v y
- */
 
 
 enum PersonType // 人的类型
