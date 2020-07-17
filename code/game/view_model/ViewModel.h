@@ -20,8 +20,7 @@
 
 
 
-// 这个继承表示允许把this指针转为共享指针
-class ViewModel : public QEnableSharedFromThis<ViewModel>
+class ViewModel
 {
 public:
     ViewModel() noexcept;
