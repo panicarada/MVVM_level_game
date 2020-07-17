@@ -1,5 +1,4 @@
 #pragma once
-//ViewModel.h
 
 
 #ifndef _VIEWMODEL_H
