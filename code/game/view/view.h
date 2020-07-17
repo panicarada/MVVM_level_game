@@ -8,7 +8,7 @@
 #include <QPoint>
 #include "person_ui.h"
 #include "map_ui.h"
-#include "./command/commands.h"
+#include "./common/commands.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class View; }

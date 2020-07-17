@@ -17,9 +17,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     app/app.cpp \
-    command/commands.cpp \
-    command/game_status_command.cpp \
-    command/move_command.cpp \
     main.cpp \
     model/Map.cpp \
     model/Model.cpp \
@@ -31,24 +28,22 @@ SOURCES += \
 
 HEADERS += \
     app/app.h \
-    command/FIRE_jump_move_command.h \
-    command/FIRE_left_move_command.h \
-    command/FIRE_right_move_command.h \
-    command/ICE_jump_move_command.h \
-    command/ICE_left_move_command.h \
-    command/ICE_right_move_command.h \
-    command/commands.h \
-    command/game_status_command.h \
-    command/move_command.h \
     common/Common.h \
+    common/commands.h \
     model/Map.h \
     model/Model.h \
     model/Person.h \
-    parameter/parameters.h \
     view/map_ui.h \
     view/person_ui.h \
     view/view.h \
-    view_model/ViewModel.h
+    view_model/FIRE_jump_move_command.h \
+    view_model/FIRE_left_move_command.h \
+    view_model/FIRE_right_move_command.h \
+    view_model/ICE_jump_move_command.h \
+    view_model/ICE_left_move_command.h \
+    view_model/ICE_right_move_command.h \
+    view_model/ViewModel.h \
+    view_model/move_command.h
 
 FORMS += \
     view/view.ui

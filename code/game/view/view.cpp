@@ -2,7 +2,6 @@
 #include "ui_view.h"
 #include <QDebug>
 #include "common/Common.h"
-#include "command/move_command.h"
 
 View::View(QWidget *parent)
     : QMainWindow(parent)
@@ -112,7 +111,7 @@ void View::keyReleaseEvent(QKeyEvent *event)
 void View::paintEvent(QPaintEvent *)
 {
     QPainter painter(this); // 构建画笔
-    qDebug() << this->size();
+//    qDebug() << this->size();
 
     ice_person->set_pos(get_ice_pos());
     fire_person->set_pos(get_fire_pos());
