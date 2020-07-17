@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QSet>
 #include <QTimer>
+#include <QMouseEvent>
 #include <QPoint>
 #include "person_ui.h"
 #include "map_ui.h"
@@ -39,6 +40,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override; // 键盘按下事件
     void keyReleaseEvent(QKeyEvent *event) override; // 键盘松开事件
     void paintEvent(QPaintEvent *) override; // 绘制事件，通过update()函数激活
+    void mousePressEvent(QMouseEvent *event) override; // 鼠标点击时间
 private slots:
     void move(); // 每隔一段时间就触发move_command
 private:

@@ -16,6 +16,11 @@ View::View(QWidget *parent)
     const int GAP = 1; // 每隔0.001秒触发一次槽函数move
     timer->start(GAP);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
+
+
+    // 屏幕设置，切勿改动！
+    // 如果完全贴合图片大小，某些屏幕上可能显示不全
+    this->setFixedSize(1100, 900);
 }
 
 View::~View()
@@ -119,11 +124,16 @@ void View::paintEvent(QPaintEvent *)
     fire_person->set_speed(get_fire_speed());
 
     // 绘制地图
-    map->paint(painter);
+    map->paint(painter, this->width(), this->height());
 
     // 绘制人物
     ice_person->paint(painter, curFrame);
     fire_person->paint(painter, curFrame);
+}
+
+void View::mousePressEvent(QMouseEvent *event)
+{
+    qDebug() << event->globalPos() << ",";
 }
 
 void View::move()

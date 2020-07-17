@@ -1,0 +1,29 @@
+[
+QPoint(24,801) ,
+QPoint(507,800) ,
+FLOOR
+]
+
+[
+QPoint(25,711) ,
+QPoint(24,800) ,
+LEFT_BLOCK
+]
+
+[
+QPoint(24,712) ,
+QPoint(363,713) ,
+CEIL
+]
+
+[
+QPoint(365,689) ,
+QPoint(365,711) ,
+LEFT_BLOCK
+]
+
+[
+QPoint(25,684) ,
+QPoint(362,689) ,
+FLOOR
+]

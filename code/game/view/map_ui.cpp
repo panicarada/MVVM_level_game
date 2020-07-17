@@ -8,7 +8,8 @@ Map_UI::Map_UI(QWidget *parent)
     img.load(":/source/image/demo_back.png");
 }
 
-void Map_UI::paint(QPainter &painter)
+void Map_UI::paint(QPainter &painter, int width, int height)
 {
-    painter.drawPixmap(0, 0, img);
+    painter.drawPixmap(0, 0, img.scaled(width, height, Qt::KeepAspectRatio));
+    painter.drawLine(QLineF(24, 800, 507, 800));
 }

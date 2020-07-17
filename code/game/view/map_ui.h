@@ -12,7 +12,7 @@ class Map_UI : public QWidget
     Q_OBJECT
 public:
     explicit Map_UI(QWidget *parent = nullptr);
-    void paint(QPainter &);
+    void paint(QPainter &,int width, int height);
 private:
     QPixmap img;
 };
