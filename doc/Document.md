@@ -71,27 +71,23 @@
 
 #### 4.1 框架描述
 
-游戏采用MVVM (Model- View- ViewModel) 架构，主要由视图 (View)、视图模型 (ViewModel)、模型 (Model)、App层四部分组成，通过这四部分实现 UI 逻辑、呈现逻辑和状态控制、数据与业务逻辑的分离，实现了模块的独立开发。
+游戏采用MVVM (Model- View- ViewModel) 架构，主要由常量(common)、模型 (Model)、视图模型 (ViewModel)、视图 (View)、应用(App)层五部分组成，通过这五部分实现 UI 逻辑、呈现逻辑和状态控制、数据与业务逻辑的分离，实现了模块的独立开发。
 
 ##### Common
 
-全局的宏定义、枚举类型。
+全局的宏定义、枚举类型。操作指令的基类定义，纯虚类`Commands`作为View中接口，纯虚函数`void exec()`作为指令的具体执行函数。
 
 ##### Model & View Model
 
-操作实体的内部定义，内部逻辑的实现。实现碰撞检测、人物位置更新等等功能。
+操作实体的内部定义，内部逻辑的实现。实现碰撞检测、人物位置更新等等功能。在View Model中以command为基类派生具体的操作指令，命名为`功能_command`，通过模板类将具体command指令与View Model层相互绑定并且实现低耦合并行开发。在View Model层中定义`Exec_功能_command`函数作为指令响应时View Model向command提供的接口，command重载`void exec()`时调用`Exec_功能_command`函数。
 
 ##### View
 
-处理界面反馈逻辑（键盘事件，定时器），以及绘制界面功能。用`command->exec()`的形式在接入Model&View Model层的功能。如果需要访问Model层的数据，在类内定义对应对应的仿函数。如`std::function<QPoint(void)> get_ice_pos`是获取冰人位置的仿函数，在App层再利用lambda表达式，绑定到Model & View Model层提供的访问接口上。
-
-##### Command
-
-操作指令，纯虚类`Commands`作为View中接口。具体的指令是其子类，命名为`功能_command`，重载`void exec()`时调用Model & View Model模块。
+从QMainWindow类派生出View类。处理界面反馈逻辑（键盘事件，定时器），以及绘制界面功能。用`command->exec()`的形式再接入Model&View Model层的功能。如果需要访问Model层的数据，在类内定义对应对应的仿函数。如`std::function<QPoint(void)> get_ice_pos`是获取冰人位置的仿函数，在App层再利用lambda表达式，绑定到Model & View Model层提供的访问接口上。
 
 ##### App
 
-将View层的共享指针、仿函数绑定到Model&View Model上。
+使用lambda表达式将View层的共享指针、仿函数绑定到Model&View Model上，向main函数提供程序执行的接口`void run()`函数。
 
 
 
