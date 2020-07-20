@@ -14,7 +14,7 @@ public:
     explicit Map_UI(QWidget *parent = nullptr);
     void paint(QPainter &,int width, int height);
 private:
-    QPixmap img;
+    QPixmap img; // 地图图像
 };
 
 #endif // MAP_UI_H

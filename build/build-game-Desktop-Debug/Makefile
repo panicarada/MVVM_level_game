@@ -849,9 +849,31 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imgs.cpp
 qrc_imgs.cpp: ../../code/game/source/imgs.qrc \
 		/usr/local/Cellar/qt/5.14.1/bin/rcc \
-		../../code/game/source/image/Assets_left.png \
-		../../code/game/source/image/Assets.png \
-		../../code/game/source/image/demo_back.png
+		../../code/game/source/image/demo_back.png \
+		../../code/game/source/image/fire_right_1.png \
+		../../code/game/source/image/fire_right_2.png \
+		../../code/game/source/image/fire_right_3.png \
+		../../code/game/source/image/fire_right_4.png \
+		../../code/game/source/image/fire_left_1.png \
+		../../code/game/source/image/ice_left_1.png \
+		../../code/game/source/image/fire_left_2.png \
+		../../code/game/source/image/ice_left_2.png \
+		../../code/game/source/image/fire_left_3.png \
+		../../code/game/source/image/ice_left_3.png \
+		../../code/game/source/image/fire_left_4.png \
+		../../code/game/source/image/ice_left_4.png \
+		../../code/game/source/image/ice_right_1.png \
+		../../code/game/source/image/fire_idle_1.png \
+		../../code/game/source/image/ice_idle_1.png \
+		../../code/game/source/image/ice_right_2.png \
+		../../code/game/source/image/fire_idle_2.png \
+		../../code/game/source/image/ice_idle_2.png \
+		../../code/game/source/image/ice_right_3.png \
+		../../code/game/source/image/ice_idle_3.png \
+		../../code/game/source/image/fire_idle_3.png \
+		../../code/game/source/image/ice_right_4.png \
+		../../code/game/source/image/fire_idle_4.png \
+		../../code/game/source/image/ice_idle_4.png
 	/usr/local/Cellar/qt/5.14.1/bin/rcc -name imgs ../../code/game/source/imgs.qrc -o qrc_imgs.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -905,6 +927,7 @@ moc_view.cpp: ../../code/game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qset.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QTimer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qtimer.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QMouseEvent \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPoint \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qpoint.h \
 		../../code/game/view/person_ui.h \
@@ -984,6 +1007,7 @@ app.o: ../../code/game/app/app.cpp ../../code/game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qevent.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QTimer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qtimer.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QMouseEvent \
 		../../code/game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1034,6 +1058,7 @@ main.o: ../../code/game/main.cpp ../../code/game/app/app.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/qevent.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QTimer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qtimer.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QMouseEvent \
 		../../code/game/view/person_ui.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QWidget \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1145,6 +1170,7 @@ view.o: ../../code/game/view/view.cpp ../../code/game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qset.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QTimer \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qtimer.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtGui.framework/Headers/QMouseEvent \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QPoint \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qpoint.h \
 		../../code/game/view/person_ui.h \

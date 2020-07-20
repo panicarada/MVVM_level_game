@@ -21,6 +21,7 @@ class View : public QMainWindow
 public:
     View(QWidget *parent = nullptr);
     ~View() override;
+    // 绑定命令的方法
     void set_game_status_command(QSharedPointer<Commands>);
     void set_ice_jump_command(QSharedPointer<Commands>);
     void set_ice_left_command(QSharedPointer<Commands>);
@@ -30,6 +31,7 @@ public:
     void set_fire_right_command(QSharedPointer<Commands>);
     void set_move_command(QSharedPointer<Commands>);
 
+    // 绑定仿函数的方法
     void set_get_ice_pos(const std::function<QPoint(void)>&&);
     void set_get_fire_pos(const std::function<QPoint(void)>&&);
     void set_get_ice_speed(const std::function<QPoint(void)>&&);
@@ -45,6 +47,7 @@ private slots:
     void move(); // 每隔一段时间就触发move_command
 private:
     Ui::View *ui;
+    // ui组件
     QSharedPointer<Person_UI> ice_person; // 冰人
     QSharedPointer<Person_UI> fire_person; // 火人
     QSharedPointer<Map_UI> map; // 地图
@@ -62,7 +65,6 @@ private:
     std::function<QPoint(void)> get_fire_pos; // 获取火人位置
     std::function<QPoint(void)> get_ice_speed; // 获取冰人速度
     std::function<QPoint(void)> get_fire_speed; // 获取火人速度
-
 
     QTimer* timer;
     int curFrame; // 用于绘制地图，记录帧数

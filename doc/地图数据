@@ -1,18 +1,18 @@
 [
-QPoint(24,801) ,
+QPoint(24,800) ,
 QPoint(507,800) ,
 FLOOR
 ]
 
 [
-QPoint(25,711) ,
+QPoint(24,711) ,
 QPoint(24,800) ,
 LEFT_BLOCK
 ]
 
 [
-QPoint(24,712) ,
-QPoint(363,713) ,
+QPoint(24,711) ,
+QPoint(363,711) ,
 CEIL
 ]
 
@@ -23,7 +23,7 @@ LEFT_BLOCK
 ]
 
 [
-QPoint(25,684) ,
-QPoint(362,689) ,
+QPoint(25,685) ,
+QPoint(362,685) ,
 FLOOR
 ]

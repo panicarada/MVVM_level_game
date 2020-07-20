@@ -133,12 +133,18 @@ void View::paintEvent(QPaintEvent *)
 
 void View::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << event->globalPos() << ",";
+    qDebug() << event->pos() << ",";
 }
 
 void View::move()
 {
-    curFrame ++;
+    static int counter = 0;
+    counter ++;
+    if (counter >= 10)
+    {
+        curFrame++;
+        counter = 0;
+    }
     if (curFrame >= 128)
     { // 上限
         curFrame = 0;
@@ -148,13 +154,11 @@ void View::move()
     if (keys_pressed.contains(Qt::Key_A))
     {
 //        qDebug() << "ice left";
-        ice_person->set_status(PersonStatus::turningLeft);
         ice_left_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_D))
     {
 //        qDebug() << "ice right";
-        ice_person->set_status(PersonStatus::turningRight);
         ice_right_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_W))
@@ -165,13 +169,11 @@ void View::move()
     if (keys_pressed.contains(Qt::Key_Left))
     {
 //        qDebug() << "fire left";
-        fire_person->set_status(PersonStatus::turningLeft);
         fire_left_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_Right))
     {
 //        qDebug() << "fire right";
-        fire_person->set_status(PersonStatus::turningRight);
         fire_right_command->exec();
     }
     if (keys_pressed.contains(Qt::Key_Up))
@@ -179,6 +181,32 @@ void View::move()
 //        qDebug() << "fire jump";
         fire_jump_command->exec();
     }
+    if (get_ice_speed().x() < 0)
+    {
+        ice_person->set_status(PersonStatus::turningLeft);
+    }
+    else if (get_ice_speed().x() > 0)
+    {
+        ice_person->set_status(PersonStatus::turningRight);
+    }
+    else
+    {
+        ice_person->set_status(PersonStatus::Facing);
+    }
+
+    if (get_fire_speed().x() < 0)
+    {
+        fire_person->set_status(PersonStatus::turningLeft);
+    }
+    else if (get_fire_speed().x() > 0)
+    {
+        fire_person->set_status(PersonStatus::turningRight);
+    }
+    else
+    {
+        fire_person->set_status(PersonStatus::Facing);
+    }
+
 
     move_command->exec();
 //    qDebug() << ice_person->pos;
