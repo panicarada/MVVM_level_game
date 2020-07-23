@@ -1,0 +1,54 @@
+version: 1.0.{build}
+
+image: Visual Studio 2019
+
+environment:
+  matrix:
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    platform: x64
+    qt: 5.14.2    
+    releaseName: Visualized_Neural_Networks_qt5142_vs2019_x64
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    platform: x86
+    qt: 5.14.2
+    releaseName: Visualized_Neural_Networks_qt5142_vs2019_x86
+
+before_build:
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set msvc=msvc2017
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set vs=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build
+  - if "%platform%"=="x86" set QTDIR=C:\Qt\%qt%\mingw73_32
+  - if "%platform%"=="x64" set QTDIR=C:\Qt\%qt%\mingw73_64
+  - if "%platform%"=="x86" set QTTOOLS=C:\Qt\Tools\mingw730_32
+  - if "%platform%"=="x64" set QTTOOLS=C:\Qt\Tools\mingw730_64
+  - set PATH=%PATH%;%QTDIR%\bin;C:MinGW\bin;%QTTOOLS%\bin;
+  - if "%platform%"=="x86" set vcvars=%vs%\vcvars32.bat
+  - if "%platform%"=="x64" set vcvars=%vs%\vcvars64.bat
+
+build_script:
+  - call "%vcvars%"
+  - cd code\src
+  - qmake
+  - mingw32-make
+
+after_build:
+  - if "%APPVEYOR_REPO_TAG%"=="true" windeployqt release\Visualized_Neural_Networks.exe --qmldir %QTDIR%\qml
+  - cd release
+  - del *.o /s/q
+  - del *.cpp /s/q
+  - del *.h /s/q
+  - tree
+
+artifacts:
+  - path: code/src/release
+    name: $(releaseName)
+
+deploy:
+  provider: GitHub
+  auth_token: $(GITHUB_OAUTH_TOKEN)
+  description: "Visualized Neural Networks release version."
+  draft: true
+  prerelease: false
+  on:
+      branch: master
+      APPVEYOR_REPO_TAG: true
+      
