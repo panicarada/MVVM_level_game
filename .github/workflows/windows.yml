@@ -22,7 +22,7 @@ jobs:
         version: [1.0.0]
         qt_ver: [5.14.2]
         qt_target: [desktop]
-        qt_arch: [win64_msvc2017_64, win32_msvc2017, win32_mingw53,win32_mingw73]
+        qt_arch: [win64_msvc2017_64, win32_msvc2017, win32_mingw73]
         # 额外设置msvc_arch
         include:
           - qt_arch: win64_msvc2017_64
@@ -39,15 +39,15 @@ jobs:
         with:
           path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
           key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
-      - name: setupQt
-        if: steps.WindowsCacheQt.outputs.cache-hit == 'true'
-        shell: pwsh
-        env:
-          QtPath: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
-        run: |
-          $qt_Path=${env:QtPath}
-          echo "::set-env name=Qt5_Dir::$qt_Path"
-          echo "::add-path::$qt_Path/bin"          
+      #- name: setupQt
+      #  if: steps.WindowsCacheQt.outputs.cache-hit == 'true'
+      #  shell: pwsh
+      #  env:
+      #    QtPath: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
+      #  run: |
+      #    $qt_Path=${env:QtPath}
+      #    echo "::set-env name=Qt5_Dir::$qt_Path"
+      #    echo "::add-path::$qt_Path/bin"          
       # 安装Qt
       - name: Install Qt
         if: steps.WindowsCacheQt.outputs.cache-hit != 'true'
@@ -62,7 +62,8 @@ jobs:
           arch: ${{ matrix.qt_arch }}
           cached: ${{steps.WindowsCacheQt.outputs.cache-hit }}
       # 拉取代码
-      - uses: actions/checkout@v1
+      - name: Check Out
+        uses: actions/checkout@v1
         with:
           fetch-depth: 1
       # 编译msvc
