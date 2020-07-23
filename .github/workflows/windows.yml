@@ -19,10 +19,9 @@ jobs:
     strategy:
       # 矩阵配置
       matrix:
-        version: [1.0.0]
         qt_ver: [5.14.2]
         qt_target: [desktop]
-        qt_arch: [win64_msvc2017_64, win32_msvc2017, win32_mingw73]
+        qt_arch: [win64_msvc2017_64, win32_msvc2017]
         # 额外设置msvc_arch
         include:
           - qt_arch: win64_msvc2017_64
@@ -39,15 +38,15 @@ jobs:
         with:
           path: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
           key: ${{ runner.os }}-Qt/${{matrix.qt_ver}}/${{matrix.qt_arch}}
-      #- name: setupQt
-      #  if: steps.WindowsCacheQt.outputs.cache-hit == 'true'
-      #  shell: pwsh
-      #  env:
-      #    QtPath: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
-      #  run: |
-      #    $qt_Path=${env:QtPath}
-      #    echo "::set-env name=Qt5_Dir::$qt_Path"
-      #    echo "::add-path::$qt_Path/bin"          
+      - name: setupQt
+        if: steps.WindowsCacheQt.outputs.cache-hit == 'true'
+        shell: pwsh
+        env:
+          QtPath: ../Qt/${{matrix.qt_ver}}/${{matrix.qt_arch_install}}
+        run: |
+          $qt_Path=${env:QtPath}
+          echo "::set-env name=Qt5_Dir::$qt_Path"
+          echo "::add-path::$qt_Path/bin"          
       # 安装Qt
       - name: Install Qt
         if: steps.WindowsCacheQt.outputs.cache-hit != 'true'
@@ -74,14 +73,14 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %vc_arch%
           qmake
-          nmake
+          nmake Debug Release
       # tag 打包
       - name: package
         if: startsWith(github.event.ref, 'refs/tags/')
         env:
           VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
-          archiveName: Fireboy&Watergirl_In_The_Forest_Temple-${{ matrix.verson }}
-          targetName: Fireboy&Watergirl_In_The_Forest_Temple.exe
+          archiveName: Fireboy&Watergirl_In_The_Forest_Temple
+          targetName: game.exe
         shell: pwsh
         run: |
           # 创建文件夹
