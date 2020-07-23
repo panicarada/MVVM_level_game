@@ -7,11 +7,11 @@ environment:
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     platform: x64
     qt: 5.14.2    
-    releaseName: Visualized_Neural_Networks_qt5142_vs2019_x64
+    releaseName: Fireboy&Watergirl_In_The_Forest_Temple_qt5142_vs2019_x64
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     platform: x86
     qt: 5.14.2
-    releaseName: Visualized_Neural_Networks_qt5142_vs2019_x86
+    releaseName: Fireboy&Watergirl_In_The_Forest_Temple_qt5142_vs2019_x86
 
 before_build:
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" set msvc=msvc2017
@@ -31,7 +31,7 @@ build_script:
   - mingw32-make
 
 after_build:
-  - if "%APPVEYOR_REPO_TAG%"=="true" windeployqt release\Visualized_Neural_Networks.exe --qmldir %QTDIR%\qml
+  - if "%APPVEYOR_REPO_TAG%"=="true" windeployqt release\Fireboy&Watergirl_In_The_Forest_Temple_.exe --qmldir %QTDIR%\qml
   - cd release
   - del *.o /s/q
   - del *.cpp /s/q
@@ -45,7 +45,7 @@ artifacts:
 deploy:
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)
-  description: "Visualized Neural Networks release version."
+  description: "Fireboy&Watergirl_In_The_Forest_Temple release version."
   draft: true
   prerelease: false
   on:
