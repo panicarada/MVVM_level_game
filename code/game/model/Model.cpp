@@ -12,6 +12,9 @@ Model::Model() noexcept
 {
     ice_person->set_pos(QPoint(20, 733)); // 设置冰人初始位置
     fire_person->set_pos(QPoint(20, 600)); // 火人初始位置
+
+    // 绑定信号和槽函数
+    connect(&(*(ice_person)), &Person::diamond_notification, this, &Model::ice_diamond_notification);
 }
 
 void Model::set_speed(double v_x, double v_y, PersonType &&type) noexcept
@@ -91,4 +94,14 @@ void Model::Move() noexcept
 {
     ice_person->move();
     fire_person->move();
+}
+
+void Model::fire_diamond_notification(const Diamond& diamond)
+{
+    emit diamond_notification(diamond);
+}
+
+void Model::ice_diamond_notification(const Diamond& diamond)
+{
+    emit diamond_notification(diamond);
 }

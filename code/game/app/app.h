@@ -3,11 +3,14 @@
 
 #include "./view_model/ViewModel.h"
 #include "./view/view.h"
-#include "model/Model.h"
+#include "./model/Model.h"
+#include <QObject>
 #include <QSharedPointer>
 
-class App
+class App : public QObject
 {
+    Q_OBJECT
+
 public:
     App();
     void run();

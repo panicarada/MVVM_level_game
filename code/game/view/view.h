@@ -9,6 +9,7 @@
 #include <QPoint>
 #include "person_ui.h"
 #include "map_ui.h"
+#include "./model/diamond.h"
 #include "./common/commands.h"
 
 QT_BEGIN_NAMESPACE
@@ -43,6 +44,8 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override; // 键盘松开事件
     void paintEvent(QPaintEvent *) override; // 绘制事件，通过update()函数激活
     void mousePressEvent(QMouseEvent *event) override; // 鼠标点击时间
+public: // 槽函数
+    void receive_diamond_notification(const Diamond& diamond); // 接收钻石被碰到的信号，在app层中与model实际提供的信号连接
 private slots:
     void move(); // 每隔一段时间就触发move_command
 private:
@@ -65,7 +68,6 @@ private:
     std::function<QPointF(void)> get_fire_pos; // 获取火人位置
     std::function<QPointF(void)> get_ice_speed; // 获取冰人速度
     std::function<QPointF(void)> get_fire_speed; // 获取火人速度
-
     QTimer* timer;
     int curFrame; // 用于绘制地图，记录帧数
 };

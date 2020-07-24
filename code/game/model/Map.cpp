@@ -12,6 +12,8 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,713), QPoint(362,710) ), CEIL));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(364,688), QPoint(364,710)), LEFT_BLOCK));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(22,685), QPoint(363,689)), FLOOR));
+
+
 }
 
 QSharedPointer<Wall_crashed_union> Map::intersect(const QRectF &rect)

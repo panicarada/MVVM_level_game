@@ -136,6 +136,11 @@ void View::mousePressEvent(QMouseEvent *event)
     qDebug() << event->pos() << ",";
 }
 
+void View::receive_diamond_notification(const Diamond &diamond)
+{ // 函数内容写钻石diamond被碰到后view层要作出的反应
+
+}
+
 void View::move()
 {
     static int counter = 0;

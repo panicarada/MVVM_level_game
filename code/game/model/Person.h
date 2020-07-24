@@ -8,11 +8,14 @@
 #include <memory>
 #include <string>
 #include <QPoint>
+#include <QObject>
 #include "Map.h"
+#include "diamond.h"
 #include "./common/Common.h"
 
-class Person
+class Person : public QObject
 {
+    Q_OBJECT
 public:
     Person() = delete; // 拒绝空构造器
     Person(QSharedPointer<Map> &map);
@@ -28,6 +31,9 @@ public:
     QPointF get_speed() noexcept;
     const bool& isAerial() noexcept; // 是否在空中
     void move();
+signals:
+    // 钻石被碰到时，发出的信号，在适合的地方使用语句emit diamond_notification()发送
+    void diamond_notification(const Diamond &diamond);
 private:
     QPointF m_speed; // 人的速度
     QPointF m_pos; // 人的位置，用左上角的点记录

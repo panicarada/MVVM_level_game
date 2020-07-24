@@ -21,6 +21,7 @@ SOURCES += \
     model/Map.cpp \
     model/Model.cpp \
     model/Person.cpp \
+    model/diamond.cpp \
     view/map_ui.cpp \
     view/person_ui.cpp \
     view/view.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     model/Map.h \
     model/Model.h \
     model/Person.h \
+    model/diamond.h \
     view/map_ui.h \
     view/person_ui.h \
     view/view.h \

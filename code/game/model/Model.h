@@ -7,10 +7,13 @@
 
 #include"Person.h"
 #include"Map.h"
+#include <QObject>
+#include "diamond.h"
 #include "./common/Common.h"
 
-class Model
+class Model : public QObject
 {
+    Q_OBJECT
 public:
     Model() noexcept;
     // 设置对应人物的速度
@@ -27,6 +30,13 @@ public:
     const bool &isAerial(PersonType &&type) noexcept;
     // 间隔刷新的move函数
     void Move() noexcept;
+public:
+    // 接收来自Person.h，钻石被碰到时发射的信号
+    void fire_diamond_notification(const Diamond& diamond);
+    void ice_diamond_notification(const Diamond& diamond);
+signals:
+    void diamond_notification(const Diamond& diamond);
+
 private:
     QSharedPointer<Map> m_map;
     QSharedPointer<Person> ice_person;

@@ -34,6 +34,9 @@ App::App()
     {
         return view_model->get_fire_speed();
     });
+
+    // 绑定信号与槽
+    connect(&(*model), &Model::diamond_notification, &(*view), &View::receive_diamond_notification);
 }
 
 
