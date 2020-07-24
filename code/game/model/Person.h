@@ -24,8 +24,8 @@ public:
     void set_speed(const QPoint &&speed) noexcept;
     void set_speed_x(const double &&speed_x) noexcept;
     void set_speed_y(const double &&speed_y) noexcept;
-    QPoint get_pos() noexcept;
-    QPoint get_speed() noexcept;
+    QPointF get_pos() noexcept;
+    QPointF get_speed() noexcept;
     const bool& isAerial() noexcept; // 是否在空中
     void move();
 private:

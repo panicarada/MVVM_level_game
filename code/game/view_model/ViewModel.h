@@ -24,10 +24,10 @@ class ViewModel
 public:
     ViewModel() noexcept;
 
-    const QPoint& get_ice_pos();
-    const QPoint& get_fire_pos();
-    const QPoint& get_ice_speed();
-    const QPoint& get_fire_speed();
+    const QPointF& get_ice_pos();
+    const QPointF& get_fire_pos();
+    const QPointF& get_ice_speed();
+    const QPointF& get_fire_speed();
 
     void Exec_Ice_left_command();
     void Exec_Ice_right_command();

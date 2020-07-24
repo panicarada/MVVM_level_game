@@ -10,7 +10,7 @@ Model::Model() noexcept
       ice_person(QSharedPointer<Person>::create(m_map)),
       fire_person(QSharedPointer<Person>::create(m_map))
 {
-    ice_person->set_pos(QPoint(20, 700)); // 设置冰人初始位置
+    ice_person->set_pos(QPoint(20, 733)); // 设置冰人初始位置
     fire_person->set_pos(QPoint(20, 600)); // 火人初始位置
 }
 
@@ -50,7 +50,7 @@ void Model::set_speed_y(double v_y, PersonType &&type) noexcept
     }
 }
 
-const QPoint &Model::get_pos(PersonType &&type) noexcept
+const QPointF &Model::get_pos(PersonType &&type) noexcept
 {
     if (type == PersonType::ICE)
     {
@@ -62,7 +62,7 @@ const QPoint &Model::get_pos(PersonType &&type) noexcept
     }
 }
 
-const QPoint &Model::get_speed(PersonType &&type) noexcept
+const QPointF &Model::get_speed(PersonType &&type) noexcept
 {
     if (type == PersonType::ICE)
     {

@@ -54,24 +54,24 @@ void Person_UI::paint(QPainter &painter, int Frame)
     // 图像绘制起点做移动是因为图片具有空的部分
     if (person_status == turningLeft)
     {
-        painter.drawPixmap(pos.x(), pos.y()+20, left_pics.at(i));
+        painter.drawPixmap(pos.x() - 31, pos.y() - 25, left_pics.at(i));
     }
     else if (person_status == turningRight)
     {
-        painter.drawPixmap(pos.x(), pos.y()+20, right_pics.at(i));
+        painter.drawPixmap(pos.x() - 24, pos.y() - 25, right_pics.at(i));
     }
     else
     {
-        painter.drawPixmap(pos.x(), pos.y()+7, idle_pics.at(i));
+        painter.drawPixmap(pos.x()-32, pos.y() - 26, idle_pics.at(i));
     }
 }
 
-void Person_UI::set_pos(const QPoint &pos)
+void Person_UI::set_pos(const QPointF &pos)
 {
     this->pos = pos;
 }
 
-void Person_UI::set_speed(const QPoint &speed)
+void Person_UI::set_speed(const QPointF &speed)
 {
     this->speed = speed;
 }

@@ -17,8 +17,8 @@ enum GameStatus
  *     |                    |
  *     v y
  */
-#define PERSONSIZE_X 50
-#define PERSONSIZE_Y 79
+#define PERSONSIZE_X 45
+#define PERSONSIZE_Y 75
 
 #define V_MOTIONLESS 0		// 静止的速度
 #define V_JUMP -1.54			// 跳跃初速度

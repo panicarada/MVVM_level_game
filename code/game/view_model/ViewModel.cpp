@@ -96,22 +96,22 @@ QSharedPointer<Commands> ViewModel::get_move_command()
     return move_command;
 }
 
-const QPoint& ViewModel::get_ice_pos()
+const QPointF& ViewModel::get_ice_pos()
 {
     return m_model->get_pos(PersonType::ICE);
 }
 
-const QPoint& ViewModel::get_fire_pos()
+const QPointF& ViewModel::get_fire_pos()
 {
     return m_model->get_pos(PersonType::FIRE);
 }
 
-const QPoint &ViewModel::get_ice_speed()
+const QPointF &ViewModel::get_ice_speed()
 {
     return m_model->get_speed(PersonType::ICE);
 }
 
-const QPoint &ViewModel::get_fire_speed()
+const QPointF &ViewModel::get_fire_speed()
 {
     return m_model->get_speed(PersonType::FIRE);
 }

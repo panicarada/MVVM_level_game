@@ -47,14 +47,14 @@ void Person::set_speed_y(const double &&speed_y) noexcept
     m_speed.setY(speed_y);
 }
 
-QPoint Person::get_pos() noexcept
+QPointF Person::get_pos() noexcept
 {
-    return m_pos.toPoint();
+    return m_pos;
 }
 
-QPoint Person::get_speed() noexcept
+QPointF Person::get_speed() noexcept
 {
-    return m_speed.toPoint();
+    return m_speed;
 }
 
 const bool &Person::isAerial() noexcept

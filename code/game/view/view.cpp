@@ -69,22 +69,22 @@ void View::set_move_command(QSharedPointer<Commands> command)
 }
 
 
-void View::set_get_ice_pos(const std::function<QPoint (void)>&& func)
+void View::set_get_ice_pos(const std::function<QPointF (void)>&& func)
 {
     this->get_ice_pos = func;
 }
 
-void View::set_get_fire_pos(const std::function<QPoint (void)>&& func)
+void View::set_get_fire_pos(const std::function<QPointF (void)>&& func)
 {
     get_fire_pos = func;
 }
 
-void View::set_get_ice_speed(const std::function<QPoint (void)>&& func)
+void View::set_get_ice_speed(const std::function<QPointF (void)>&& func)
 {
     get_ice_speed = func;
 }
 
-void View::set_get_fire_speed(const std::function<QPoint (void)>&& func)
+void View::set_get_fire_speed(const std::function<QPointF (void)>&& func)
 {
     get_fire_speed = func;
 }

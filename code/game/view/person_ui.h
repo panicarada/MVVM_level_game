@@ -26,12 +26,12 @@ class Person_UI : public QWidget
 public:
     explicit Person_UI(const PersonType &&person_type, QWidget *parent = nullptr);
     void paint(QPainter &, int Frame); // 人物在不同帧下的绘制方法
-    void set_pos(const QPoint &pos);
-    void set_speed(const QPoint &speed);
+    void set_pos(const QPointF &pos);
+    void set_speed(const QPointF &speed);
     void set_status(const PersonStatus &&status);
 private:
-    QPoint pos; // 位置
-    QPoint speed; // 速度
+    QPointF pos; // 位置
+    QPointF speed; // 速度
     PersonType person_type; // 人物类型
     PersonStatus person_status; // 人物形态
 

@@ -32,10 +32,10 @@ public:
     void set_move_command(QSharedPointer<Commands>);
 
     // 绑定仿函数的方法
-    void set_get_ice_pos(const std::function<QPoint(void)>&&);
-    void set_get_fire_pos(const std::function<QPoint(void)>&&);
-    void set_get_ice_speed(const std::function<QPoint(void)>&&);
-    void set_get_fire_speed(const std::function<QPoint(void)>&&);
+    void set_get_ice_pos(const std::function<QPointF(void)>&&);
+    void set_get_fire_pos(const std::function<QPointF(void)>&&);
+    void set_get_ice_speed(const std::function<QPointF(void)>&&);
+    void set_get_fire_speed(const std::function<QPointF(void)>&&);
 
 
 protected:
@@ -61,10 +61,10 @@ private:
     QSharedPointer<Commands> fire_right_command; // 火人右移指令
     QSharedPointer<Commands> move_command; // 刷新位移指令
 
-    std::function<QPoint(void)> get_ice_pos; // 获取冰人位置
-    std::function<QPoint(void)> get_fire_pos; // 获取火人位置
-    std::function<QPoint(void)> get_ice_speed; // 获取冰人速度
-    std::function<QPoint(void)> get_fire_speed; // 获取火人速度
+    std::function<QPointF(void)> get_ice_pos; // 获取冰人位置
+    std::function<QPointF(void)> get_fire_pos; // 获取火人位置
+    std::function<QPointF(void)> get_ice_speed; // 获取冰人速度
+    std::function<QPointF(void)> get_fire_speed; // 获取火人速度
 
     QTimer* timer;
     int curFrame; // 用于绘制地图，记录帧数
