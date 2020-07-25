@@ -10,8 +10,8 @@ Model::Model() noexcept
       ice_person(QSharedPointer<Person>::create(m_map)),
       fire_person(QSharedPointer<Person>::create(m_map))
 {
-    ice_person->set_pos(QPoint(20, 733)); // 设置冰人初始位置
-    fire_person->set_pos(QPoint(20, 600)); // 火人初始位置
+    ice_person->set_pos(QPoint(30, 733)); // 设置冰人初始位置
+    fire_person->set_pos(QPoint(30, 600)); // 火人初始位置
 
     // 绑定信号和槽函数
     connect(&(*(ice_person)), &Person::diamond_notification, this, &Model::ice_diamond_notification);

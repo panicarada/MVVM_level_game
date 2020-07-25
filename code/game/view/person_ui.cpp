@@ -54,15 +54,36 @@ void Person_UI::paint(QPainter &painter, int Frame)
     // 图像绘制起点做移动是因为图片具有空的部分
     if (person_status == turningLeft)
     {
-        painter.drawPixmap(pos.x() - 31, pos.y() - 25, left_pics.at(i));
+        if (person_type == ICE)
+        {
+            painter.drawPixmap(pos.x(), pos.y(), left_pics.at(i));
+        }
+        else if (person_type == FIRE)
+        {
+            painter.drawPixmap(pos.x(), pos.y()+4, left_pics.at(i));
+        }
     }
     else if (person_status == turningRight)
     {
-        painter.drawPixmap(pos.x() - 24, pos.y() - 25, right_pics.at(i));
+        if (person_type == ICE)
+        {
+            painter.drawPixmap(pos.x() - 24, pos.y(), right_pics.at(i));
+        }
+        else if (person_type == FIRE)
+        {
+            painter.drawPixmap(pos.x() - 13, pos.y(), right_pics.at(i));
+        }
     }
     else
     {
-        painter.drawPixmap(pos.x()-32, pos.y() - 26, idle_pics.at(i));
+        if (person_type == ICE)
+        {
+            painter.drawPixmap(pos.x()+2, pos.y() - 8, idle_pics.at(i));
+        }
+        else if (person_type == FIRE)
+        {
+            painter.drawPixmap(pos.x()+4, pos.y() - 12, idle_pics.at(i));
+        }
     }
 }
 

@@ -17,12 +17,12 @@ enum GameStatus
  *     |                    |
  *     v y
  */
-#define PERSONSIZE_X 45
-#define PERSONSIZE_Y 75
+#define PERSONSIZE_X 40
+#define PERSONSIZE_Y 60
 
 #define V_MOTIONLESS 0		// 静止的速度
 #define V_JUMP -1.54			// 跳跃初速度
-#define V_MOVE 0.50           // 左右移动速度
+#define V_MOVE 0.80           // 左右移动速度
 #define DY_SPEED 0.010 		// 受重力影响的速度改变量
 #define FALL_BOUND 0.7		// 下落过程最大速度
 
