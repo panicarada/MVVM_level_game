@@ -32,13 +32,14 @@ public:
     void Move() noexcept;
 public:
     // 接收来自Person.h，钻石被碰到时发射的信号
-    void fire_diamond_notification(const Diamond& diamond);
-    void ice_diamond_notification(const Diamond& diamond);
+    void fire_diamond_notification(Diamond& diamond);
+    void ice_diamond_notification(Diamond& diamond);
 signals:
-    void diamond_notification(const Diamond& diamond);
+    void diamond_notification(Diamond& diamond,bool is_ice);
 
 private:
     QSharedPointer<Map> m_map;
+    QSharedPointer<Diamonds> m_diamonds;
     QSharedPointer<Person> ice_person;
     QSharedPointer<Person> fire_person;
 };

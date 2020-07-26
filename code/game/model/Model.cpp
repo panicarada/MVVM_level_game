@@ -7,14 +7,16 @@
 
 Model::Model() noexcept
     : m_map(QSharedPointer<Map>::create()),
-      ice_person(QSharedPointer<Person>::create(m_map)),
-      fire_person(QSharedPointer<Person>::create(m_map))
+      m_diamonds(QSharedPointer<Diamonds>::create()),
+      ice_person(QSharedPointer<Person>::create(m_map,m_diamonds)),
+      fire_person(QSharedPointer<Person>::create(m_map,m_diamonds))
 {
     ice_person->set_pos(QPoint(30, 733)); // 设置冰人初始位置
     fire_person->set_pos(QPoint(30, 600)); // 火人初始位置
 
     // 绑定信号和槽函数
     connect(&(*(ice_person)), &Person::diamond_notification, this, &Model::ice_diamond_notification);
+    connect(&(*(fire_person)), &Person::diamond_notification, this, &Model::fire_diamond_notification);
 }
 
 void Model::set_speed(double v_x, double v_y, PersonType &&type) noexcept
@@ -96,12 +98,35 @@ void Model::Move() noexcept
     fire_person->move();
 }
 
-void Model::fire_diamond_notification(const Diamond& diamond)
+void Model::fire_diamond_notification(Diamond& diamond)
 {
-    emit diamond_notification(diamond);
+    emit diamond_notification(diamond,true);
 }
 
-void Model::ice_diamond_notification(const Diamond& diamond)
+void Model::ice_diamond_notification(Diamond& diamond)
 {
-    emit diamond_notification(diamond);
+    emit diamond_notification(diamond,false);
 }
+
+void Model::diamond_notification(Diamond& diamond, bool is_ice)
+{
+    //冰娃
+    if(is_ice)
+    {
+        if(diamond.isIce())
+        {
+            diamond.set_exist(false);
+        }
+    }
+    //火娃
+    else
+    {
+        if(diamond.isIce() == false)
+        {
+            diamond.set_exist(false);
+        }
+    }
+}
+
+
+
