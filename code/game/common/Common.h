@@ -26,6 +26,11 @@ enum GameStatus
 #define DY_SPEED 0.010 		// 受重力影响的速度改变量
 #define FALL_BOUND 0.7		// 下落过程最大速度
 
+enum DiamondType
+{
+    Fire_Diamond = 0,
+    Ice_Diamond
+};
 
 enum PersonType // 人的类型
 {

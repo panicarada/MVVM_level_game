@@ -18,7 +18,7 @@ class Person : public QObject
     Q_OBJECT
 public:
     Person() = delete; // 拒绝空构造器
-    Person(QSharedPointer<Map> &map);
+    Person(QSharedPointer<Map> &map,QSharedPointer<Diamonds> &Diamonds);
     // 设置人物位置
     void set_pos(const QPoint &&pos) noexcept;
     void set_pos_x(const double &&pos_x) noexcept;
@@ -33,11 +33,12 @@ public:
     void move();
 signals:
     // 钻石被碰到时，发出的信号，在适合的地方使用语句emit diamond_notification()发送
-    void diamond_notification(const Diamond &diamond);
+    void diamond_notification(QSharedPointer<Diamond> diamond);
 private:
     QPointF m_speed; // 人的速度
     QPointF m_pos; // 人的位置，用左上角的点记录
     QSharedPointer<Map> m_map; // 指向地图的指针
+    QSharedPointer<Diamonds> m_diamonds; // 指向钻石的指针
     bool m_isAerial; // 是否在空中
     QRectF rect; // 人所对应的矩形，m_pos是其左下角
 };
