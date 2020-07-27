@@ -136,10 +136,14 @@ void View::mousePressEvent(QMouseEvent *event)
     qDebug() << event->pos() << ",";
 }
 
-void View::receive_diamond_notification(const Diamond &diamond)
-{ // 函数内容写钻石diamond被碰到后view层要作出的反应
-
+void View::react_diamond_notification(int id)
+{ // 标示码为id的钻石在Model层中被检测到发射有效碰撞，今后不再显示它
+    map->remove_diamond(id); // 在地图中删除这一钻石
+    map->update(); // 重绘图像
 }
+
+
+
 
 void View::move()
 {

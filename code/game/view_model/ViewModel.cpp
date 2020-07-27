@@ -5,9 +5,9 @@
 #include "./common/Common.h"
 #include <QDebug>
 
-ViewModel::ViewModel() noexcept
+ViewModel::ViewModel(QSharedPointer<Model> model) noexcept
 {
-    m_model = QSharedPointer<Model>::create();
+    m_model = model;
     // 此时this并没有被共享指针管理，不可以对命令进行连接
 }
 

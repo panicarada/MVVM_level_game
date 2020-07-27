@@ -5,7 +5,7 @@
 App::App()
 {
     model = QSharedPointer<Model>::create();
-    view_model = QSharedPointer<ViewModel>::create();
+    view_model = QSharedPointer<ViewModel>::create(model);
     view_model->setup_command(view_model);
     view = QSharedPointer<View>::create();
 
@@ -35,12 +35,15 @@ App::App()
         return view_model->get_fire_speed();
     });
 
+
     // 绑定信号与槽
-    connect(&(*model), &Model::diamond_notification, &(*view), &View::receive_diamond_notification);
+    QObject::connect(model.data(), &Model::diamond_notification_model, view.data(), &View::react_diamond_notification);
 }
 
 
 void App::run()
 {
+
+
     view->show();
 }

@@ -1,7 +1,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 #include <iostream>
-
+#include <QPointF>
+#include <QLineF>
+#include <QRectF>
 enum GameStatus
 {
     playing = 0,
@@ -21,8 +23,8 @@ enum GameStatus
 #define PERSONSIZE_Y 60
 
 #define V_MOTIONLESS 0		// 静止的速度
-#define V_JUMP -1.54			// 跳跃初速度
-#define V_MOVE 0.80           // 左右移动速度
+#define V_JUMP -1.50			// 跳跃初速度
+#define V_MOVE 0.7           // 左右移动速度
 #define DY_SPEED 0.010 		// 受重力影响的速度改变量
 #define FALL_BOUND 0.7		// 下落过程最大速度
 
@@ -46,5 +48,10 @@ enum WallType // 墙体类型
     RIGHT_BLOCK = 3, // 右墙
     CEIL = 4, // 天花板，碰撞后立刻退回原地，并且Y方向速度反向
 };
+
+
+// 判断矩形和线段是否相交
+bool intersect_rect_segment(const QRectF& rect, const QLineF& segment);
+
 
 #endif // COMMON_H

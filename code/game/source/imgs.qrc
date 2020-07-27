@@ -25,5 +25,7 @@
         <file>image/ice_right_2.png</file>
         <file>image/ice_right_3.png</file>
         <file>image/ice_right_4.png</file>
+        <file>image/diomand_fire.png</file>
+        <file>image/diomand_ice.png</file>
     </qresource>
 </RCC>

@@ -30,16 +30,10 @@ public:
     const bool &isAerial(PersonType &&type) noexcept;
     // 间隔刷新的move函数
     void Move() noexcept;
-public:
-    // 接收来自Person.h，钻石被碰到时发射的信号
-    void fire_diamond_notification(Diamond& diamond);
-    void ice_diamond_notification(Diamond& diamond);
 signals:
-    void diamond_notification(Diamond& diamond,bool is_ice);
-
+    void diamond_notification_model(const int& id); // 钻石被碰到后，发射被碰钻石的id
 private:
     QSharedPointer<Map> m_map;
-    QSharedPointer<Diamonds> m_diamonds;
     QSharedPointer<Person> ice_person;
     QSharedPointer<Person> fire_person;
 };

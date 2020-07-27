@@ -17,11 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     app/app.cpp \
+    common/Common.cpp \
     main.cpp \
     model/Map.cpp \
     model/Model.cpp \
-    model/Person.cpp \
     model/diamond.cpp \
+    model/Person.cpp \
     view/map_ui.cpp \
     view/person_ui.cpp \
     view/view.cpp \

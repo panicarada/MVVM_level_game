@@ -7,6 +7,7 @@
 Map::Map()
     : walls_set(QSet<QSharedPointer<Wall>>())
 {
+    // 墙体数据的写入
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,800),  QPoint(24,714)), LEFT_BLOCK));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(365,712), QPoint(365,688)), LEFT_BLOCK));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,685), QPoint(24,599)), LEFT_BLOCK));
@@ -20,6 +21,9 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(1018,715), QPoint(1075,714)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(817,630), QPoint(933,632)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(538,632), QPoint(680,630)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(538,817), QPoint(619,817)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(763,817), QPoint(846,817)), FLOOR));
+
 
 
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,714), QPoint(365,712)), CEIL));
@@ -41,10 +45,19 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(991, 743), QPoint(1018, 715)), SLOPE));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(933, 632), QPoint(957, 656)), SLOPE));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(481, 574), QPoint(538, 632)), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(508, 800), QPoint(537, 817)), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(620, 817), QPoint(648, 800)), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(733, 800), QPoint(763, 817)), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(846, 817), QPoint(876, 800)), SLOPE));
 
+
+
+    // 钻石数据的写入
+    diamonds_set.insert(QSharedPointer<Diamond>::create(FIRE, 0, QPointF(558, 740)));
+    diamonds_set.insert(QSharedPointer<Diamond>::create(ICE, 1, QPointF(785, 740)));
 }
 
-QSharedPointer<Wall_crashed_union> Map::intersect(const QRectF &rect)
+QSharedPointer<Wall_crashed_union> Map::intersect_wall(const QRectF &rect)
 {
     QSharedPointer<Wall_crashed_union> crashed_walls = nullptr;
     for (auto wall : walls_set)
@@ -80,6 +93,19 @@ QSharedPointer<Wall_crashed_union> Map::intersect(const QRectF &rect)
     return crashed_walls;
 }
 
+QSharedPointer<Diamond> Map::intersect_diamond(const QRectF &rect, const PersonType &type)
+{
+    for (auto diamond : diamonds_set)
+    {
+        if (diamond->intersect(rect, type))
+        { // 一次只可能碰到一个钻石
+            return diamond;
+        }
+    }
+    return nullptr;
+}
+
+
 
 Wall::Wall(const QLineF &&segment, const WallType &&wall_type)
     : segment(segment), wall_type(wall_type)
@@ -89,29 +115,5 @@ Wall::Wall(const QLineF &&segment, const WallType &&wall_type)
 
 bool Wall::intersect(const QRectF &rect)
 { // 判断线段与（实心）矩形相交
-  /* （1）线段在矩形内部，等价于两个点都在矩形内部 */
-  if (rect.contains(segment.p1()) && rect.contains(segment.p2()))
-  {
-      return true;
-  }
-
-  /* （2）线段与矩形四个边中任意一个相交 */
-  if (segment.intersects(QLineF(rect.topLeft(), rect.topRight()), nullptr) == QLineF::BoundedIntersection)
-  {
-      return true;
-  }
-  if (segment.intersects(QLineF(rect.topRight(), rect.bottomRight()), nullptr) == QLineF::BoundedIntersection)
-  {
-      return true;
-  }
-  if (segment.intersects(QLineF(rect.bottomRight(), rect.bottomLeft()), nullptr) == QLineF::BoundedIntersection)
-  {
-      return true;
-  }
-  if (segment.intersects(QLineF(rect.bottomLeft(), rect.topLeft()), nullptr) == QLineF::BoundedIntersection)
-  {
-      return true;
-  }
-
-  return false;
+    return intersect_rect_segment(rect, segment);
 }

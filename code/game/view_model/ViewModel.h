@@ -22,7 +22,7 @@
 class ViewModel
 {
 public:
-    ViewModel() noexcept;
+    ViewModel(QSharedPointer<Model> model) noexcept;
 
     const QPointF& get_ice_pos();
     const QPointF& get_fire_pos();

@@ -7,9 +7,10 @@
 #include <QtMath>
 
 
-Person::Person(QSharedPointer<Map> &map,QSharedPointer<Diamonds> &Diamonds)
-    : m_speed(QPoint()), m_pos(QPoint()), m_map(map), m_isAerial(false),m_diamonds(Diamonds)
-    , rect(QRectF(m_pos, QSize(PERSONSIZE_X, PERSONSIZE_Y)))
+
+Person::Person(QSharedPointer<Map> &map, PersonType &&type)
+    : m_speed(QPoint()), m_pos(QPoint()), m_map(map), m_isAerial(false)
+    , rect(QRectF(m_pos, QSize(PERSONSIZE_X, PERSONSIZE_Y))), type(type)
 {
 
 }
@@ -65,17 +66,16 @@ const bool &Person::isAerial() noexcept
 void Person::move()
 {
     // 检测碰撞
-    auto crashed_walls = m_map->intersect(rect);
+    auto crashed_walls = m_map->intersect_wall(rect);
 
     //检测钻石
-    auto result_diamond = m_diamonds->intersect(rect);
+    auto crashed_diamond = m_map->intersect_diamond(rect, type);
 
-    if(result_diamond!=nullptr)//碰到钻石
+    if (crashed_diamond != nullptr) // 碰到钻石
     {
-        //result_diamond->set_exist(false);
-        emit diamond_notification(result_diamond);
+        crashed_diamond->disable(); // 碰到即使其失效
+        emit this->diamond_notification(crashed_diamond->get_id());
     }
-
 
     // 受重力影响，y方向速度增大（向下）
     m_speed += QPointF(0, DY_SPEED);
