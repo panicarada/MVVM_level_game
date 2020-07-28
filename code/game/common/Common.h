@@ -47,6 +47,8 @@ enum WallType // 墙体类型
     LEFT_BLOCK = 2, // 左墙，检测到碰撞后立刻退回原地
     RIGHT_BLOCK = 3, // 右墙
     CEIL = 4, // 天花板，碰撞后立刻退回原地，并且Y方向速度反向
+    ICE_POOL = 5, //冰潭，冰娃安全通过，火娃死
+    FIRE_POOL = 6 //火潭，火娃安全通过，冰娃死
 };
 
 

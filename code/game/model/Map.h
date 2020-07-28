@@ -36,6 +36,8 @@ struct Wall_crashed_union
     QSharedPointer<Wall> ceil; // 天花板
     QSharedPointer<Wall> floor; // 地板
     QSharedPointer<Wall> slope; // 斜坡
+    QSharedPointer<Wall> ice_pool; // 冰池
+    QSharedPointer<Wall> fire_pool; // 火池
 };
 
 

@@ -103,6 +103,14 @@ void Model::Move() noexcept
 {
     ice_person->move();
     fire_person->move();
+    if(ice_person->isFirePool())
+    {
+        ice_person->set_death(true);
+    }
+    if(fire_person->isIcePool())
+    {
+        fire_person->set_death(true);
+    }
 }
 
 

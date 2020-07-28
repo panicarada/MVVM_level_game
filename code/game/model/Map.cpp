@@ -15,8 +15,10 @@ Map::Map()
 
 
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,800), QPoint(508,800)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(508,800), QPoint(648,800)), FIRE_POOL));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,685), QPoint(365,685)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(648,800), QPoint(733,800)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(733,800), QPoint(876,800)), ICE_POOL));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(876,800), QPoint(991,799)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(1018,715), QPoint(1075,714)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(817,630), QPoint(933,632)), FLOOR));

@@ -9,7 +9,7 @@
 
 
 Person::Person(QSharedPointer<Map> &map, PersonType &&type)
-    : m_speed(QPoint()), m_pos(QPoint()), m_map(map), m_isAerial(false)
+    : m_speed(QPoint()), m_pos(QPoint()), m_map(map), m_isAerial(false),m_Icepool(false),m_Firepool(false), m_isDead(false)
     , rect(QRectF(m_pos, QSize(PERSONSIZE_X, PERSONSIZE_Y))), type(type)
 {
 
@@ -63,6 +63,21 @@ const bool &Person::isAerial() noexcept
     return m_isAerial;
 }
 
+const bool &Person::isIcePool() noexcept
+{
+    return m_Icepool;
+}
+
+void Person::set_death(bool is_death) noexcept
+{
+    m_isDead = is_death;
+}
+
+const bool &Person::isFirePool() noexcept
+{
+    return m_Firepool;
+}
+
 void Person::move()
 {
     // 检测碰撞
@@ -79,6 +94,9 @@ void Person::move()
 
     // 受重力影响，y方向速度增大（向下）
     m_speed += QPointF(0, DY_SPEED);
+
+    m_Icepool = false;
+    m_Firepool = false;//初始化
 
     if (crashed_walls == nullptr)
     { // 说明人物在空中，
@@ -185,6 +203,26 @@ void Person::move()
                 // 退回来
                 m_pos -= m_speed;
                 rect.moveTopLeft(m_pos);
+            }
+        }
+
+        //碰到池子
+        if(crashed_walls->ice_pool )
+        {
+            m_Icepool = true;
+            m_isAerial = false;
+            if (m_speed.y() > 0)
+            { // 阻止向下运动
+                m_speed.setY(0);
+            }
+        }
+        else if(crashed_walls->fire_pool )
+        {
+            m_Firepool = true;
+            m_isAerial = false;
+            if (m_speed.y() > 0)
+            { // 阻止向下运动
+                m_speed.setY(0);
             }
         }
 
