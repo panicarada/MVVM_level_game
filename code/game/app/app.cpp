@@ -38,6 +38,8 @@ App::App()
 
     // 绑定信号与槽
     QObject::connect(model.data(), &Model::diamond_notification_model, view.data(), &View::react_diamond_notification);
+    QObject::connect(model.data(), &Model::trigger_lever_notification, view.data(), &View::react_lever_notification);
+    QObject::connect(model.data(), &Model::lifting_platform_notification, view.data(), &View::react_platform_notification);
 }
 
 

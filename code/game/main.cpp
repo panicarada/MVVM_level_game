@@ -2,6 +2,8 @@
 
 #include <QApplication>
 #include <QPixmap>
+#include <QtMath>
+#include <QDebug>
 
 
 int main(int argc, char *argv[])

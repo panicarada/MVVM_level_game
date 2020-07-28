@@ -28,6 +28,10 @@ enum GameStatus
 #define DY_SPEED 0.010 		// 受重力影响的速度改变量
 #define FALL_BOUND 0.7		// 下落过程最大速度
 
+
+#define trigger_lever_angle_threshold_lower_bound 18 // 控制杆角度阈值下界
+#define trigger_lever_angle_threshold_upper_bound 162 // 控制杆角度阈值上界
+#define platform_speed_threshold 1  // 升降台速度阈值一样，并且升降台只能匀速运动
 enum DiamondType
 {
     Fire_Diamond = 0,
@@ -47,6 +51,12 @@ enum WallType // 墙体类型
     LEFT_BLOCK = 2, // 左墙，检测到碰撞后立刻退回原地
     RIGHT_BLOCK = 3, // 右墙
     CEIL = 4, // 天花板，碰撞后立刻退回原地，并且Y方向速度反向
+};
+
+enum movable_item_status // 可移动元件的状态（比如升降台和机关）
+{
+    MOTIONLESS = 0, // 静止的
+    MOVING = 1, // 正在移动
 };
 
 

@@ -23,8 +23,13 @@ SOURCES += \
     model/Model.cpp \
     model/diamond.cpp \
     model/Person.cpp \
+    model/lifting_platform.cpp \
+    model/trigger_lever.cpp \
+    model/wall.cpp \
+    view/lifting_platform_ui.cpp \
     view/map_ui.cpp \
     view/person_ui.cpp \
+    view/trigger_lever_ui.cpp \
     view/view.cpp \
     view_model/ViewModel.cpp
 
@@ -36,8 +41,13 @@ HEADERS += \
     model/Model.h \
     model/Person.h \
     model/diamond.h \
+    model/lifting_platform.h \
+    model/trigger_lever.h \
+    model/wall.h \
+    view/lifting_platform_ui.h \
     view/map_ui.h \
     view/person_ui.h \
+    view/trigger_lever_ui.h \
     view/view.h \
     view_model/FIRE_jump_move_command.h \
     view_model/FIRE_left_move_command.h \

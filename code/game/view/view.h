@@ -45,6 +45,8 @@ protected:
     void mousePressEvent(QMouseEvent *event) override; // 鼠标点击时间
 public slots: // 槽函数
     void react_diamond_notification(int id); // 接收钻石被碰到的信号，在app层中与model实际提供的信号连接，接收的是钻石的标示码id
+    void react_lever_notification(const int &id, const double &angle, const movable_item_status &status); // 接收控制杆的信号
+    void react_platform_notification(const int &id, const QPointF &pos, const movable_item_status &status); // 接收升降台的信号
 private slots:
     void move(); // 每隔一段时间就触发move_command
 private:

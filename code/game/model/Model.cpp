@@ -24,7 +24,20 @@ Model::Model() noexcept
 //        qDebug() << "fire signal sented, id = " << id;
         emit this->diamond_notification_model(id);
     });
+
+    // 绑定机关发射的信号
+    QObject::connect(m_map.data(), &Map::lifting_platform_notification, this, [&](const int& id, const QPointF& pos, const movable_item_status& status)
+    {
+//        qDebug() << "platform signal sented, id = " << id;
+        emit this->lifting_platform_notification(id, pos, status);
+    });
+    QObject::connect(m_map.data(), &Map::trigger_lever_notification, this, [&](const int& id, const double& angle, const movable_item_status& status)
+    {
+//        qDebug() << "level signal sented, id = " << id;
+        emit this->trigger_lever_notification(id, angle, status);
+    });
 }
+
 
 void Model::set_speed(double v_x, double v_y, PersonType &&type) noexcept
 {

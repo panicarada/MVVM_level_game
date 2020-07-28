@@ -32,6 +32,10 @@ public:
     void Move() noexcept;
 signals:
     void diamond_notification_model(const int& id); // 钻石被碰到后，发射被碰钻石的id
+    // 升降台状态发生变化后发射出的信号
+    void lifting_platform_notification(const int& id, const QPointF& pos, const movable_item_status& status);
+    // 控制杆状态发生变化后发射出的信号
+    void trigger_lever_notification(const int& id, const double& angle, const movable_item_status& status);
 private:
     QSharedPointer<Map> m_map;
     QSharedPointer<Person> ice_person;

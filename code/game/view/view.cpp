@@ -142,6 +142,18 @@ void View::react_diamond_notification(int id)
     map->update(); // 重绘图像
 }
 
+void View::react_lever_notification(const int &id, const double &angle, const movable_item_status &status)
+{
+    map->set_property_lever(id, angle, status);
+    //    qDebug() << "lever signal accepted, id = " << id << ", angle = " << angle << ", status = " << status;
+}
+
+void View::react_platform_notification(const int &id, const QPointF &pos, const movable_item_status &status)
+{
+    map->set_property_platform(id, pos, status);
+//    qDebug() << "platform signal accepted, id = " << id << ", pos = " << pos << ", status = " << status;
+}
+
 
 
 

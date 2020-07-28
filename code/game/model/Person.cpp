@@ -65,20 +65,73 @@ const bool &Person::isAerial() noexcept
 
 void Person::move()
 {
-    // 检测碰撞
+    // 检测墙体碰撞
+    // 受重力影响，y方向速度增大（向下）
+    m_speed += QPointF(0, DY_SPEED);
+
     auto crashed_walls = m_map->intersect_wall(rect);
 
-    //检测钻石
+    // 检测钻石
     auto crashed_diamond = m_map->intersect_diamond(rect, type);
-
     if (crashed_diamond != nullptr) // 碰到钻石
     {
         crashed_diamond->disable(); // 碰到即使其失效
         emit this->diamond_notification(crashed_diamond->get_id());
     }
 
-    // 受重力影响，y方向速度增大（向下）
-    m_speed += QPointF(0, DY_SPEED);
+    // 检测控制杆
+    auto crashed_lever = m_map->intersect_lever(rect);
+    if (crashed_lever != nullptr) // 碰到机关
+    {
+        if (crashed_lever->intersect(rect.translated(m_speed)))
+        { // 如果移动后还是会碰撞
+            double speed_angle = 90.0 - qRadiansToDegrees(qAtan(m_speed.x() / m_speed.y())); // 速度和x正方向夹角
+//            qDebug() << "speed_angle = " << speed_angle;
+            if (speed_angle >= crashed_lever->get_angle())
+            {
+                crashed_lever->trigger_counter_clockwise();
+            }
+            else
+            {
+                crashed_lever->trigger_clockwise();
+            }
+//            crashed_lever->move();
+            return ;
+        }
+    }
+
+    // 检测碰撞升降台
+    auto crashed_platform_wall = m_map->intersect_platform(rect);
+    if (crashed_platform_wall != nullptr)
+    { // 相对于碰到墙体，加入到碰到的墙体集合即可
+        if (crashed_walls == nullptr)
+        {
+            crashed_walls = QSharedPointer<Wall_crashed_union>::create();
+        }
+        if (crashed_platform_wall->wall_type == LEFT_BLOCK)
+        {
+            crashed_walls->left_block = crashed_platform_wall;
+        }
+        else if (crashed_platform_wall->wall_type == RIGHT_BLOCK)
+        {
+            crashed_walls->right_block = crashed_platform_wall;
+        }
+        else if (crashed_platform_wall->wall_type == CEIL)
+        {
+            crashed_walls->ceil = crashed_platform_wall;
+        }
+        else if (crashed_platform_wall->wall_type == FLOOR)
+        {
+            crashed_walls->floor = crashed_platform_wall;
+
+            m_speed.setY(-platform_speed_threshold); // 跟着平台一起上升
+        }
+    }
+
+    m_map->update();
+
+
+
 
     if (crashed_walls == nullptr)
     { // 说明人物在空中，

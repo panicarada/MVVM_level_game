@@ -51,3 +51,29 @@ void Map_UI::remove_diamond(const int &id)
         }
     }
 }
+
+void Map_UI::set_property_lever(const int &id, const double &angle, const movable_item_status &status)
+{
+    for (auto lever : levers)
+    {
+        if (lever->get_id() == id)
+        {
+            lever->set_angle(angle);
+            lever->set_status(status);
+            break;
+        }
+    }
+}
+
+void Map_UI::set_property_platform(const int &id, const QPointF &pos, const movable_item_status &status)
+{
+    for (auto platform : platforms)
+    {
+        if (platform->get_id() == id)
+        {
+            platform->set_pos(pos.toPoint());
+            platform->set_status(status);
+            break;
+        }
+    }
+}

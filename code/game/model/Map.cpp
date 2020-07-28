@@ -3,6 +3,7 @@
 
 #include"Map.h"
 #include <QRect>
+#include <QDebug>
 
 Map::Map()
     : walls_set(QSet<QSharedPointer<Wall>>())
@@ -23,6 +24,8 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(538,632), QPoint(680,630)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(538,817), QPoint(619,817)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(763,817), QPoint(846,817)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,573), QPoint(481,574)), FLOOR));
+
 
 
 
@@ -55,6 +58,30 @@ Map::Map()
     // 钻石数据的写入
     diamonds_set.insert(QSharedPointer<Diamond>::create(FIRE, 0, QPointF(558, 740)));
     diamonds_set.insert(QSharedPointer<Diamond>::create(ICE, 1, QPointF(785, 740)));
+
+
+    // 升降台数据和对应机关的写入
+    auto platform_0 = QSharedPointer<lifting_platform>::create(0, QPointF(24, 546), 546, 432);
+    platforms_set.insert(platform_0);
+    levers_set.insert(QSharedPointer<trigger_lever>::create(0, platform_0, true, QPoint(264, 570)));
+
+
+    // 连接机关发出的信号
+    for (auto platform : platforms_set)
+    {
+        QObject::connect(platform.data(), &lifting_platform::lifting_platform_notification, this, [&](const int& id, const QPointF& pos, const movable_item_status& status){
+//            qDebug() << "platform signal sented, id = " << id;
+            emit this->lifting_platform_notification(id, pos, status);
+        });
+    }
+    for (auto lever : levers_set)
+    {
+        QObject::connect(lever.data(), &trigger_lever::trigger_lever_notification, this, [&](const int& id, const double& angle, const movable_item_status& status){
+//            qDebug() << "lever signal sented, id = " << id;
+            emit this->trigger_lever_notification(id, angle, status);
+        });
+    }
+
 }
 
 QSharedPointer<Wall_crashed_union> Map::intersect_wall(const QRectF &rect)
@@ -105,15 +132,41 @@ QSharedPointer<Diamond> Map::intersect_diamond(const QRectF &rect, const PersonT
     return nullptr;
 }
 
-
-
-Wall::Wall(const QLineF &&segment, const WallType &&wall_type)
-    : segment(segment), wall_type(wall_type)
+QSharedPointer<trigger_lever> Map::intersect_lever(const QRectF &rect)
 {
-
+    for (auto lever : levers_set)
+    {
+        if (lever->intersect(rect))
+        {
+            return lever;
+        }
+    }
+    return nullptr;
 }
 
-bool Wall::intersect(const QRectF &rect)
-{ // 判断线段与（实心）矩形相交
-    return intersect_rect_segment(rect, segment);
+QSharedPointer<Wall> Map::intersect_platform(const QRectF &rect)
+{
+    for (auto platform : platforms_set)
+    {
+        auto crashed_wall = platform->intersect(rect);
+        if (crashed_wall)
+        {
+            return crashed_wall;
+        }
+    }
+    return nullptr;
 }
+
+void Map::update()
+{
+    for (auto lever : levers_set)
+    {
+        lever->move();
+    }
+    for (auto platform : platforms_set)
+    {
+        platform->move();
+    }
+}
+
+
