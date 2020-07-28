@@ -36,6 +36,8 @@ signals:
     void lifting_platform_notification(const int& id, const QPointF& pos, const movable_item_status& status);
     // 控制杆状态发生变化后发射出的信号
     void trigger_lever_notification(const int& id, const double& angle, const movable_item_status& status);
+    // 碰到池子死亡后，游戏状态改变
+    void change_game_status_notification(const GameStatus &status);
 private:
     QSharedPointer<Map> m_map;
     QSharedPointer<Person> ice_person;

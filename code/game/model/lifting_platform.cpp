@@ -41,6 +41,16 @@ void lifting_platform::move()
     }
 }
 
+movable_item_status lifting_platform::get_status()
+{
+    return status;
+}
+
+double lifting_platform::get_speed()
+{
+    return speed;
+}
+
 QSharedPointer<Wall> lifting_platform::intersect(const QRectF &rect)
 {
     if (left_edge->intersect(rect)) return left_edge;

@@ -34,6 +34,9 @@ public:
 signals:
     // 钻石被碰到时，发出的信号，在适合的地方使用语句emit diamond_notification()发送钻石的标示码
     void diamond_notification(const int &id);
+    // 碰到池子死亡后，游戏状态改变
+    void change_game_status_notification(const GameStatus &status);
+
 private:
     QPointF m_speed; // 人的速度
     QPointF m_pos; // 人的位置，用左上角的点记录

@@ -3,7 +3,7 @@
 
 
 
-const double trigger_lever::length = 3.0;
+const double trigger_lever::length = 24.0;
 const double trigger_lever::angular_velocity_threshold = 1.0;
 
 trigger_lever::trigger_lever(const int&& id, QSharedPointer<lifting_platform> platform, const bool&& positive_implies_up, const QPoint &&hinge_pos)
@@ -79,6 +79,6 @@ void trigger_lever::move()
                 platform->trigger_up();
             }
         }
-        platform->move();
+//        platform->move();
     }
 }

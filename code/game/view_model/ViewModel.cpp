@@ -49,6 +49,12 @@ void ViewModel::Exec_move_command()
     m_model->Move();
 }
 
+void ViewModel::Exec_Restart_command()
+{
+    m_model.reset();
+
+}
+
 void ViewModel::setup_command(QSharedPointer<ViewModel> vm)
 {
     // 绑定命令

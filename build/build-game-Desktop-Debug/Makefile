@@ -892,6 +892,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imgs.cpp
 qrc_imgs.cpp: ../../code/game/source/imgs.qrc \
 		/usr/local/Cellar/qt/5.14.1/bin/rcc \
+		../../code/game/source/image/platform_motionless.png \
 		../../code/game/source/image/demo_back.png \
 		../../code/game/source/image/fire_right_1.png \
 		../../code/game/source/image/fire_right_2.png \
@@ -907,6 +908,9 @@ qrc_imgs.cpp: ../../code/game/source/imgs.qrc \
 		../../code/game/source/image/fire_left_4.png \
 		../../code/game/source/image/ice_left_4.png \
 		../../code/game/source/image/diomand_ice.png \
+		../../code/game/source/image/lever_move.png \
+		../../code/game/source/image/platform_move.png \
+		../../code/game/source/image/lever_motionless.png \
 		../../code/game/source/image/ice_right_1.png \
 		../../code/game/source/image/fire_idle_1.png \
 		../../code/game/source/image/ice_idle_1.png \
@@ -963,6 +967,7 @@ moc_app.cpp: ../../code/game/app/app.h \
 		../../code/game/view_model/ICE_left_move_command.h \
 		../../code/game/view_model/ICE_right_move_command.h \
 		../../code/game/view_model/move_command.h \
+		../../code/game/view_model/restart_command.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QEnableSharedFromThis \
 		../../code/game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -1278,6 +1283,7 @@ app.o: ../../code/game/app/app.cpp ../../code/game/app/app.h \
 		../../code/game/view_model/ICE_left_move_command.h \
 		../../code/game/view_model/ICE_right_move_command.h \
 		../../code/game/view_model/move_command.h \
+		../../code/game/view_model/restart_command.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QEnableSharedFromThis \
 		../../code/game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -1346,6 +1352,7 @@ main.o: ../../code/game/main.cpp ../../code/game/app/app.h \
 		../../code/game/view_model/ICE_left_move_command.h \
 		../../code/game/view_model/ICE_right_move_command.h \
 		../../code/game/view_model/move_command.h \
+		../../code/game/view_model/restart_command.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QEnableSharedFromThis \
 		../../code/game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -1640,7 +1647,11 @@ view.o: ../../code/game/view/view.cpp ../../code/game/view/view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qsharedpointer.h \
 		ui_view.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDebug \
-		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdebug.h
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdebug.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/QMessageBox \
+		/usr/local/Cellar/qt/5.14.1/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QProcess \
+		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qprocess.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o view.o ../../code/game/view/view.cpp
 
 ViewModel.o: ../../code/game/view_model/ViewModel.cpp ../../code/game/view_model/ViewModel.h \
@@ -1675,6 +1686,7 @@ ViewModel.o: ../../code/game/view_model/ViewModel.cpp ../../code/game/view_model
 		../../code/game/view_model/ICE_left_move_command.h \
 		../../code/game/view_model/ICE_right_move_command.h \
 		../../code/game/view_model/move_command.h \
+		../../code/game/view_model/restart_command.h \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QEnableSharedFromThis \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/QDebug \
 		/usr/local/Cellar/qt/5.14.1/lib/QtCore.framework/Headers/qdebug.h

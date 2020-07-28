@@ -3,6 +3,8 @@
 lifting_platform_ui::lifting_platform_ui(const int &&id, const QPoint &&pos, QWidget *parent)
     : QWidget(parent), id(id), pos(pos), status(MOTIONLESS)
 {
+    img_motionless.load(":/source/image/platform_motionless.png");
+    img_moving.load(":/source/image/platform_move.png");
 
 }
 

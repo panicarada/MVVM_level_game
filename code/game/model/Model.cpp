@@ -36,6 +36,18 @@ Model::Model() noexcept
 //        qDebug() << "level signal sented, id = " << id;
         emit this->trigger_lever_notification(id, angle, status);
     });
+
+    // 绑定池水发射的游戏状态改变的信号
+    QObject::connect(ice_person.data(), &Person::change_game_status_notification, this, [&](const GameStatus& status){
+//        qDebug() << "ice person change game status signal sented";
+        emit this->change_game_status_notification(status);
+    });
+
+    QObject::connect(fire_person.data(), &Person::change_game_status_notification, this, [&](const GameStatus& status){
+//        qDebug() << "fire person change game status signal sented";
+        emit this->change_game_status_notification(status);
+    });
+
 }
 
 

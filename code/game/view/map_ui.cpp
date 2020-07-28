@@ -15,6 +15,13 @@ Map_UI::Map_UI(QWidget *parent)
     // 添加钻石具体数据
     diamonds << QSharedPointer<Diamond_UI>::create(0, QPoint(558, 740), FIRE);
     diamonds << QSharedPointer<Diamond_UI>::create(1, QPoint(785, 740), ICE);
+
+    // 添加升降台具体数据
+    platforms << QSharedPointer<lifting_platform_ui>::create(0, QPoint(24, 546));
+
+    // 添加控制杆具体数据
+    levers << QSharedPointer<trigger_lever_ui>::create(0, QPoint(264, 570));
+
 }
 
 void Map_UI::paint(QPainter &painter, int width, int height)
@@ -30,6 +37,18 @@ void Map_UI::paint(QPainter &painter, int width, int height)
         { // 火钻石
             painter.drawPixmap(diamond->pos, img_fire_diamond);
         }
+    }
+
+    // 绘制机关
+    for (auto platform : platforms)
+    {
+        platform->paint(painter);
+    }
+
+    // 绘制控制杆
+    for (auto lever : levers)
+    {
+        lever->paint(painter);
     }
 
 

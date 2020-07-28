@@ -65,6 +65,13 @@ const bool &Person::isAerial() noexcept
 
 void Person::move()
 {
+    if (m_map->intersect_wrong_pool(rect, type))
+    { // 角色死亡，发射游戏状态改变的信号
+        emit change_game_status_notification(DEAD);
+        return ;
+    }
+
+
     // 检测墙体碰撞
     // 受重力影响，y方向速度增大（向下）
     m_speed += QPointF(0, DY_SPEED);
@@ -101,30 +108,33 @@ void Person::move()
     }
 
     // 检测碰撞升降台
-    auto crashed_platform_wall = m_map->intersect_platform(rect);
-    if (crashed_platform_wall != nullptr)
+    QSharedPointer<Wall> crashed_platform_edge;
+    auto crashed_platform = m_map->intersect_platform(rect, crashed_platform_edge);
+    if (crashed_platform != nullptr)
     { // 相对于碰到墙体，加入到碰到的墙体集合即可
         if (crashed_walls == nullptr)
         {
             crashed_walls = QSharedPointer<Wall_crashed_union>::create();
         }
-        if (crashed_platform_wall->wall_type == LEFT_BLOCK)
+        if (crashed_platform_edge->wall_type == LEFT_BLOCK)
         {
-            crashed_walls->left_block = crashed_platform_wall;
+            crashed_walls->left_block = crashed_platform_edge;
         }
-        else if (crashed_platform_wall->wall_type == RIGHT_BLOCK)
+        else if (crashed_platform_edge->wall_type == RIGHT_BLOCK)
         {
-            crashed_walls->right_block = crashed_platform_wall;
+            crashed_walls->right_block = crashed_platform_edge;
         }
-        else if (crashed_platform_wall->wall_type == CEIL)
+        else if (crashed_platform_edge->wall_type == CEIL)
         {
-            crashed_walls->ceil = crashed_platform_wall;
+            crashed_walls->ceil = crashed_platform_edge;
         }
-        else if (crashed_platform_wall->wall_type == FLOOR)
+        else if (crashed_platform_edge->wall_type == FLOOR)
         {
-            crashed_walls->floor = crashed_platform_wall;
-
-            m_speed.setY(-platform_speed_threshold); // 跟着平台一起上升
+            crashed_walls->floor = crashed_platform_edge;
+            if (crashed_platform->get_status() == MOVING)
+            {
+                m_speed.setY(1.6*crashed_platform->get_speed()); // 跟着平台一起上升或下降
+            }
         }
     }
 

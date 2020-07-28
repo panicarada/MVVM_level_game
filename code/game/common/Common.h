@@ -6,10 +6,10 @@
 #include <QRectF>
 enum GameStatus
 {
-    playing = 0,
-    dead,
-    pause,
-    reset, // 游戏重启
+    PLAYING = 0,
+    DEAD, // 角色死亡
+    PAUSE,
+    RESET, // 游戏重启
 };
 
 /* 注：坐标系为 */
@@ -26,12 +26,12 @@ enum GameStatus
 #define V_JUMP -1.50			// 跳跃初速度
 #define V_MOVE 0.7           // 左右移动速度
 #define DY_SPEED 0.010 		// 受重力影响的速度改变量
-#define FALL_BOUND 0.7		// 下落过程最大速度
+#define FALL_BOUND 1.2		// 下落过程最大速度
 
 
 #define trigger_lever_angle_threshold_lower_bound 18 // 控制杆角度阈值下界
 #define trigger_lever_angle_threshold_upper_bound 162 // 控制杆角度阈值上界
-#define platform_speed_threshold 1  // 升降台速度阈值一样，并且升降台只能匀速运动
+#define platform_speed_threshold 0.5  // 升降台速度阈值一样，并且升降台只能匀速运动
 enum DiamondType
 {
     Fire_Diamond = 0,
@@ -51,6 +51,9 @@ enum WallType // 墙体类型
     LEFT_BLOCK = 2, // 左墙，检测到碰撞后立刻退回原地
     RIGHT_BLOCK = 3, // 右墙
     CEIL = 4, // 天花板，碰撞后立刻退回原地，并且Y方向速度反向
+    ICE_POOL = 5, // 冰潭，冰娃安全通过，火娃死
+    FIRE_POOL = 6, // 火潭，火娃安全通过，冰娃死
+    POISON_POOL = 7, // 毒潭，碰到即死
 };
 
 enum movable_item_status // 可移动元件的状态（比如升降台和机关）

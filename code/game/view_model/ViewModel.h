@@ -14,6 +14,7 @@
 #include "ICE_left_move_command.h"
 #include "ICE_right_move_command.h"
 #include "move_command.h"
+#include "restart_command.h"
 
 #include <QEnableSharedFromThis>
 
@@ -38,6 +39,7 @@ public:
     void Exec_Fire_jump_command();
 
     void Exec_move_command();
+    void Exec_Restart_command(); // 重启游戏
 
 
     // 构造并绑定命令指针

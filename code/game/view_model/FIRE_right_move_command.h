@@ -1,7 +1,3 @@
-#pragma once
-//Fire_right_move_command
-
-
 #ifndef _FIRERIGHT_H
 #define _FIRERIGHT_H
 

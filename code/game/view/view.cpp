@@ -1,13 +1,16 @@
 #include "view.h"
 #include "ui_view.h"
 #include <QDebug>
+#include <QMessageBox>
+#include <QPushButton>
 #include "common/Common.h"
+#include <QProcess>
 
 View::View(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)
     , timer(new QTimer) // 定时器
-    , curFrame(0)
+    , curFrame(0), game_status(PLAYING)
 {
     ui->setupUi(this);
     fire_person = QSharedPointer<Person_UI>::create(PersonType::FIRE, this);
@@ -17,6 +20,8 @@ View::View(QWidget *parent)
     timer->start(GAP);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 
+    // 连接暂停信号
+    connect(this, &View::pause_signal, this, &View::react_game_status_change);
 
     // 屏幕设置，切勿改动！
     // 如果完全贴合图片大小，某些屏幕上可能显示不全
@@ -95,13 +100,10 @@ void View::keyPressEvent(QKeyEvent *event)
 
     /* 1.游戏暂停 */
     if (keys_pressed.contains(Qt::Key_Space))
-    { // 暂停
+    { // 暂停或取消暂停
         qDebug() << "Pause";
-//        game_status_command->set_parameters(
-//                    QSharedPointer<gameParameters>::create(GameStatus::pause));
-//        game_status_command->exec();
+        emit pause_signal(PAUSE);
     }
-
 }
 
 
@@ -155,6 +157,96 @@ void View::react_platform_notification(const int &id, const QPointF &pos, const 
 }
 
 
+void View::react_game_status_change(const GameStatus &status)
+{
+    if (status == DEAD)
+    { // 角色死亡
+        qDebug() << "game dead status accepted";
+        // 断开计时器连接
+        disconnect(timer, SIGNAL(timeout()), this, SLOT(move()));
+
+        // 创建弹窗
+        auto msg_box = QSharedPointer<QMessageBox>::create();
+        msg_box->setIcon(QMessageBox::Information);
+        // tr是为了显示中文
+        msg_box->setWindowTitle(tr("提示")); // 设置弹窗标题
+        msg_box->setText(tr("通关失败，是否重新游戏？")); // 设置弹窗信息
+        msg_box->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msg_box->setDefaultButton(QMessageBox::Yes);
+        msg_box->button(QMessageBox::Yes)->setText(tr("重启")); // 设置弹窗按钮的文字
+        msg_box->button(QMessageBox::No)->setText(tr("退出"));
+
+        msg_box->show();
+        // click_result判断用户点击了什么按钮
+        auto click_result = msg_box->exec();
+        if (click_result == QMessageBox::Yes)
+        {
+            qDebug() << tr("游戏重启");
+            QString program = QApplication::applicationFilePath();
+            QStringList arguments = QApplication::arguments();
+            QString workingDirectory = QDir::currentPath();
+            QProcess::startDetached(program, arguments, workingDirectory);
+            QApplication::exit();
+        }
+        else if (click_result == QMessageBox::No)
+        {
+            qDebug() << tr("退出游戏");
+            this->close();
+        }
+    }
+    else if (status == PAUSE)
+    {
+        if (game_status == PAUSE)
+        { // 正在暂停
+            qDebug() << tr("取消暂停");
+            connect(timer, SIGNAL(timeout()), this, SLOT(move())); // 重连计时器
+            game_status = PLAYING; // 修改游戏状态
+        }
+        else if (game_status == PLAYING)
+        {
+            qDebug() << tr("暂停");
+            // 清除所有按键
+            keys_pressed.clear();
+
+            // 断开计时器连接
+            disconnect(timer, SIGNAL(timeout()), this, SLOT(move()));
+            game_status = PAUSE;
+            // 创建弹窗
+            auto msg_box = QSharedPointer<QMessageBox>::create();
+            msg_box->setIcon(QMessageBox::Information);
+            // tr是为了显示中文
+            msg_box->setWindowTitle(tr("提示")); // 设置弹窗标题
+            msg_box->setText(tr("通关失败，是否重新游戏？")); // 设置弹窗信息
+            msg_box->setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Save);
+            msg_box->setDefaultButton(QMessageBox::Save);
+            msg_box->button(QMessageBox::Yes)->setText(tr("重启游戏")); // 设置弹窗按钮的文字
+            msg_box->button(QMessageBox::No)->setText(tr("退出"));
+            msg_box->button(QMessageBox::Save)->setText(tr("继续游戏"));
+
+            msg_box->show();
+            // click_result判断用户点击了什么按钮
+            auto click_result = msg_box->exec();
+            if (click_result == QMessageBox::Yes)
+            {
+                qDebug() << tr("游戏重启");
+                QString program = QApplication::applicationFilePath();
+                QStringList arguments = QApplication::arguments();
+                QString workingDirectory = QDir::currentPath();
+                QProcess::startDetached(program, arguments, workingDirectory);
+                QApplication::exit();
+            }
+            else if (click_result == QMessageBox::No)
+            {
+                qDebug() << tr("退出游戏");
+                this->close();
+            }
+            else if (click_result == QMessageBox::Save)
+            { // 继续游戏
+                emit pause_signal(PAUSE);
+            }
+        }
+    }
+}
 
 
 void View::move()

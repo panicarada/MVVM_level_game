@@ -25,6 +25,10 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(538,817), QPoint(619,817)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(763,817), QPoint(846,817)), FLOOR));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,573), QPoint(481,574)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(707,646), QPoint(791,646)), FLOOR));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(142,432), QPoint(565,432    )), FLOOR));
+
+
 
 
 
@@ -40,6 +44,8 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(535,484), QPoint(904,484)), CEIL));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(142,455), QPoint(507,456)), CEIL));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(507,456), QPoint(535,484)), CEIL));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(24,341), QPoint(790,343)), CEIL));
+
 
 
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(991, 801), QPoint(991, 743)), RIGHT_BLOCK));
@@ -52,6 +58,15 @@ Map::Map()
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(620, 817), QPoint(648, 800)), SLOPE));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(733, 800), QPoint(763, 817)), SLOPE));
     walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(846, 817), QPoint(876, 800)), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(680, 630), QPoint(707, 646)), SLOPE));
+    walls_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(791, 646), QPoint(817, 630)), SLOPE));
+
+
+
+    // 池水
+    fire_pools_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(512,802), QPoint(643,802)), FIRE_POOL));
+    ice_pools_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(738,802), QPoint(871,802)), ICE_POOL));
+    poison_pools_set.insert(QSharedPointer<Wall>::create(QLineF(QPoint(685, 632), QPoint(812, 632)), POISON_POOL));
 
 
 
@@ -120,6 +135,39 @@ QSharedPointer<Wall_crashed_union> Map::intersect_wall(const QRectF &rect)
     return crashed_walls;
 }
 
+bool Map::intersect_wrong_pool(const QRectF &rect, const PersonType &type)
+{
+    if (type == ICE)
+    { // 冰人不能碰火池
+        for (auto fire_pool : fire_pools_set)
+        {
+            if (fire_pool->intersect(rect))
+            {
+                return true;
+            }
+        }
+    }
+    else if (type == FIRE)
+    { // 火人不能碰冰池
+        for (auto ice_pool : ice_pools_set)
+        {
+            if (ice_pool->intersect(rect))
+            {
+                return true;
+            }
+        }
+    }
+    for (auto poison_pool : poison_pools_set)
+    { // 都不能碰毒池
+        if (poison_pool->intersect(rect))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 QSharedPointer<Diamond> Map::intersect_diamond(const QRectF &rect, const PersonType &type)
 {
     for (auto diamond : diamonds_set)
@@ -144,16 +192,19 @@ QSharedPointer<trigger_lever> Map::intersect_lever(const QRectF &rect)
     return nullptr;
 }
 
-QSharedPointer<Wall> Map::intersect_platform(const QRectF &rect)
+
+QSharedPointer<lifting_platform> Map::intersect_platform(const QRectF &rect, QSharedPointer<Wall> &wall_ptr)
 {
     for (auto platform : platforms_set)
     {
         auto crashed_wall = platform->intersect(rect);
         if (crashed_wall)
         {
-            return crashed_wall;
+            wall_ptr = crashed_wall;
+            return platform;
         }
     }
+    wall_ptr = nullptr;
     return nullptr;
 }
 

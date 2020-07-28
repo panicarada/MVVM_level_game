@@ -27,5 +27,9 @@
         <file>image/ice_right_4.png</file>
         <file>image/diomand_fire.png</file>
         <file>image/diomand_ice.png</file>
+        <file>image/platform_motionless.png</file>
+        <file>image/platform_move.png</file>
+        <file>image/lever_motionless.png</file>
+        <file>image/lever_move.png</file>
     </qresource>
 </RCC>

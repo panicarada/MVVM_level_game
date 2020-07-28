@@ -47,6 +47,9 @@ public slots: // 槽函数
     void react_diamond_notification(int id); // 接收钻石被碰到的信号，在app层中与model实际提供的信号连接，接收的是钻石的标示码id
     void react_lever_notification(const int &id, const double &angle, const movable_item_status &status); // 接收控制杆的信号
     void react_platform_notification(const int &id, const QPointF &pos, const movable_item_status &status); // 接收升降台的信号
+    void react_game_status_change(const GameStatus &status); // 接收游戏状态改变的信号
+signals:
+    void pause_signal(const GameStatus &status); // 发送暂停信号
 private slots:
     void move(); // 每隔一段时间就触发move_command
 private:
@@ -69,7 +72,10 @@ private:
     std::function<QPointF(void)> get_fire_pos; // 获取火人位置
     std::function<QPointF(void)> get_ice_speed; // 获取冰人速度
     std::function<QPointF(void)> get_fire_speed; // 获取火人速度
+
+
     QTimer* timer;
     int curFrame; // 用于绘制地图，记录帧数
+    GameStatus game_status; // 游戏状态
 };
 #endif // VIEW_H
