@@ -28,10 +28,10 @@ build_script:
   - call "%vcvars%"
   - cd code\game
   - qmake
-  - mingw32-make
+  - nmake
 
 after_build:
-  - if "%APPVEYOR_REPO_TAG%"=="true" windeployqt release\fire_boy_and_water_girl_game.exe --qmldir %QTDIR%\qml
+  - if "%APPVEYOR_REPO_TAG%"=="true" windeployqt bin\fire_boy_and_water_girl_game.exe --qmldir %QTDIR%\qml
   - cd release
   - del *.o /s/q
   - del *.cpp /s/q
@@ -45,7 +45,7 @@ artifacts:
 deploy:
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)
-  description: "fire_boy_and_water_girl_game"
+  description: "fire_boy_and_water_girl_game release"
   draft: true
   prerelease: false
   on:
