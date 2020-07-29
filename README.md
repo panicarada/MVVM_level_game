@@ -7,6 +7,6 @@
 
 操作方式：
 
-![](http://latex.codecogs.com/gif.latex? \leftarrow, \rightarrow)控制火人左右移动，![](http://latex.codecogs.com/gif.latex? \uparrow)控制控制火人跳跃。
+方向键“左”，方向键“右”控制火人左右移动，方向键“上”控制控制火人跳跃。
 
 A, D控制冰人左右移动，W控制冰人跳跃。
