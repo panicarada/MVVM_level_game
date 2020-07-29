@@ -216,7 +216,7 @@ void View::react_game_status_change(const GameStatus &status)
             msg_box->setIcon(QMessageBox::Information);
             // tr是为了显示中文
             msg_box->setWindowTitle(tr("提示")); // 设置弹窗标题
-            msg_box->setText(tr("通关失败，是否重新游戏？")); // 设置弹窗信息
+            msg_box->setText(tr("游戏暂停")); // 设置弹窗信息
             msg_box->setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Save);
             msg_box->setDefaultButton(QMessageBox::Save);
             msg_box->button(QMessageBox::Yes)->setText(tr("重启游戏")); // 设置弹窗按钮的文字
